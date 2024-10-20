@@ -1,7 +1,4 @@
 import "../global.css";
-import { Inter } from "@next/font/google";
-import LocalFont from "@next/font/local";
-import { Analytics } from "./components/analytics";
 
 export const metadata = {
   title: {
@@ -28,19 +25,10 @@ export const metadata = {
     },
   },
 };
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-});
-
-const calSans = LocalFont({
-  src: "../public/fonts/CalSans-SemiBold.ttf",
-  variable: "--font-calsans",
-});
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={[inter.variable, calSans.variable].join(" ")}>
+    <html lang="en">
       <head>
         <Analytics />
       </head>
