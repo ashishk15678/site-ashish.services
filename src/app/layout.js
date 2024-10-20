@@ -1,5 +1,4 @@
-import "../global.css";
-
+import "./global.css";
 export const metadata = {
   title: {
     default: "ashish.services",
