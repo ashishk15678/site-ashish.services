@@ -1,4 +1,5 @@
 import "./global.css";
+import { Poppins } from "next/font/google/index";
 export const metadata = {
   title: {
     default: "ashish.services",
@@ -29,7 +30,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head></head>
-      <body className={`bg-black `}>{children}</body>
+      <body className={``}>{children}</body>
     </html>
   );
 }
