@@ -3,5 +3,19 @@
 @tailwind utilities;
 
   
+.text-change{
+    color:rgb(223, 221, 221);
+    text-shadow: 8px 4px 4px #000000;
+}
 
-  
+.text-w::before {
+    content: "";
+    left:-20px;
+    background-color: white;
+    position: "absolute";
+}
+
+.text-w{
+    mix-blend-mode: color-dodge;
+    text-shadow: 2px 2px 2px #f5ebeb;
+}
