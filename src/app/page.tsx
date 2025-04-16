@@ -5,6 +5,7 @@ import type React from "react"
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { getCalApi } from "@calcom/embed-react";
+import { ArrowBigRightDashIcon, ArrowRightIcon, ArrowUpRight } from "lucide-react";
 
 export default function HomeContent() {
   const [leetcodeStats, setLeetcodeStats] = useState({
@@ -45,11 +46,11 @@ export default function HomeContent() {
 
         // Fetch GitHub skills
         const skillsMap = {
-          languages: new Set(['TypeScript', 'JavaScript', 'Python', 'SQL']),
+          languages: new Set(['TypeScript', 'JavaScript', 'Python', 'SQL', "Rust"]),
           frameworks: new Set(['React', 'Next.js', 'TailwindCSS', 'Express.js']),
-          tools: new Set(['MongoDB', 'PostgreSQL', 'Prisma', 'Drizzle']),
-          platforms: new Set(['Vercel', 'AWS', 'Docker', 'GitHub']),
-          software: new Set(['VS Code', 'Postman', 'DataGrip', 'Figma'])
+          tools: new Set(['MongoDB', 'PostgreSQL', 'Prisma']),
+          platforms: new Set(['Vercel', 'Docker', 'GitHub']),
+          software: new Set(['VS Code', 'Postman', 'Figma', "Cursor"])
         };
 
 
@@ -85,12 +86,12 @@ export default function HomeContent() {
 
         <p className="text-gray-400 leading-relaxed max-w-2xl">
           Passionate about creating beautiful and functional web experiences. Specializing in full-stack development
-          with a keen eye for design. Currently available for freelance projects and collaborations.
+          with a keen eye for design. Currently available for freelance pro jects and collaborations.
         </p>
 
         <div className="flex gap-4">
           <button
-            onClick={() => window.open('https://x.com/ashish15678', '_blank')}
+            onClick={() => window.open('https://x.com/ashish15678', '_blank', 'width=600,height=800')}
             className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg cursor-pointer text-sm font-medium transition-colors">
             Connect <Badge>X</Badge>
           </button>
@@ -101,6 +102,11 @@ export default function HomeContent() {
             className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-sm font-medium transition-colors"
           >
             Schedule a Call
+          </button>
+          <button
+            onClick={() => window.open('https://resources.ashish.services', '_blank', 'width=600,height=800')}
+            className="flex items-center gap-2 cursor-pointer bg-white text-black px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+            Resources <ArrowUpRight className="w-4 h-4" />
           </button>
         </div>
       </section>
@@ -157,15 +163,15 @@ export default function HomeContent() {
       <section className="space-y-4">
         <h2 className="text-lg font-semibold text-white">Connect</h2>
         <div className="flex flex-wrap gap-3">
-          <a href="https://github.com/ashishk15678" className="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-sm transition-colors">
+          <button onClick={() => window.open('https://github.com/ashishk15678', '_blank', 'width=600,height=800')} className="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-sm transition-colors">
             GitHub
-          </a>
-          <a href="https://twitter.com/ashish15678" className="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-sm transition-colors">
+          </button>
+          <button onClick={() => window.open('https://twitter.com/ashish15678', '_blank', 'width=600,height=800')} className="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-sm transition-colors">
             Twitter
-          </a>
-          <a href="mailto:hi@ashish.services" className="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-sm transition-colors">
+          </button>
+          <button onClick={() => window.open('mailto:hi@ashish.services', '_blank', 'width=600,height=800')} className="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-sm transition-colors">
             Email
-          </a>
+          </button>
         </div>
       </section>
     </div>
