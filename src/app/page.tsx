@@ -33,6 +33,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Link from "next/link";
 
 const techStack = [
   {
@@ -74,6 +75,22 @@ const techStack = [
   {
     name: "Docker",
     color: "bg-green-50 text-green-700 border-green-200 hover:bg-green-100",
+  },
+  {
+    name: "Web3",
+    color: "bg-green-50 text-blue-700 border-blue-200 hover:bg-blue-100",
+  },
+  {
+    name: "Rust",
+    color: "bg-green-50 text-blue-700 border-blue-200 hover:bg-blue-100",
+  },
+  {
+    name: "Solana",
+    color: "bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100",
+  },
+  {
+    name: "Ethereum",
+    color: "bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100",
   },
 ];
 
@@ -121,18 +138,18 @@ const projects = [
 
 const education = [
   {
-    degree: "Master of Computer Science",
-    school: "Stanford University",
-    year: "2019-2021",
-    description: "Specialized in Machine Learning and Distributed Systems",
-    gpa: "3.8/4.0",
-  },
-  {
     degree: "Bachelor of Technology",
-    school: "Indian Institute of Technology",
-    year: "2015-2019",
+    school: "Noida Institute of Technology",
+    year: "2024-2028",
     description: "Computer Science and Engineering",
     gpa: "8.5/10.0",
+  },
+  {
+    degree: "Intermediate",
+    school: "Army Public School",
+    year: "2023",
+    description: "Science",
+    gpa: "72%",
   },
 ];
 
@@ -429,7 +446,7 @@ const MagneticButton = ({ children, className, ...props }: any) => {
   return (
     <button
       ref={buttonRef}
-      className={`relative transition-all duration-300 ease-out ${className} ${
+      className={`relative inline-flex items-center justify-center transition-all duration-300 ease-out ${className} ${
         isHovered ? "scale-110 shadow-2xl" : ""
       }`}
       style={{
@@ -445,7 +462,7 @@ const MagneticButton = ({ children, className, ...props }: any) => {
       {isHovered && (
         <div className="absolute inset-0 bg-green-400 rounded-md blur-xl opacity-30 animate-pulse"></div>
       )}
-      <div className="relative z-10">{children}</div>
+      {children}
     </button>
   );
 };
@@ -1044,7 +1061,7 @@ export default function Portfolio() {
           <div className="flex items-center space-x-3">
             <Avatar className="h-10 w-10 ring-2 ring-green-500 ring-offset-2 dark:ring-offset-black">
               <AvatarImage
-                src="/placeholder.svg?height=40&width=40"
+                src="https://avatars.githubusercontent.com/u/147980956?v=4"
                 alt="Profile"
               />
               <AvatarFallback className="bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300">
@@ -1104,7 +1121,7 @@ export default function Portfolio() {
                   } leading-relaxed`}
                 >
                   I'm a passionate full-stack developer specializing in creating
-                  beautiful and functional web applications. With 5+ years of
+                  beautiful and functional web applications. With 2+ years of
                   experience, I've worked with startups and enterprises to bring
                   their ideas to life.
                 </p>
@@ -1116,7 +1133,7 @@ export default function Portfolio() {
                         isDark ? "text-gray-300" : "text-gray-600"
                       }`}
                     >
-                      San Francisco, CA
+                      Greater Noida, India
                     </span>
                   </div>
                   <div className="flex items-center gap-1.5">
@@ -1135,16 +1152,7 @@ export default function Portfolio() {
                     className={`text-sm ${
                       isDark ? "text-gray-300" : "text-gray-600"
                     }`}
-                  >
-                    Visit my website:{" "}
-                    <LinkPreview
-                      href="https://ashish.services"
-                      title="Ashish Services"
-                      description="Professional web development and consulting services. Specializing in modern web technologies and scalable solutions."
-                    >
-                      ashish.services
-                    </LinkPreview>
-                  </p>
+                  ></p>
                   <p
                     className={`text-sm ${
                       isDark ? "text-gray-300" : "text-gray-600"
@@ -1161,28 +1169,34 @@ export default function Portfolio() {
                   </p>
                 </div>
                 <div className="flex gap-3">
-                  <MagneticButton className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-4 py-2 rounded-md text-sm font-medium shadow-lg hover:shadow-green-500/25 transition-all duration-300">
-                    <Mail className="h-3.5 w-3.5 mr-1.5" />
-                    hi@ashish.services
-                  </MagneticButton>
+                  <Link href="mailto:ashish@ashish.services" className="flex-1">
+                    <MagneticButton
+                      className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 
+                      text-white px-4 py-2 rounded-md text-sm font-medium shadow-lg hover:shadow-green-500/25 
+                      transition-all duration-300 w-full"
+                    >
+                      <Mail className="h-3.5 w-3.5 mr-1.5 flex-shrink-0" />
+                      <span className="truncate">hi@ashish.services</span>
+                    </MagneticButton>
+                  </Link>
                   <Button
                     variant="outline"
                     size="sm"
-                    className="border-green-200 hover:bg-green-50 dark:border-green-800 dark:hover:bg-green-900 dark:text-white"
+                    className="border-green-200 hover:bg-green-50 dark:border-green-800 dark:hover:bg-green-900 dark:text-white flex-shrink-0"
                   >
-                    <Github className="h-3.5 w-3.5 mr-1.5" />
+                    <Github className="h-4 w-4 mr-1.5" />
                     GitHub
                   </Button>
                 </div>
               </div>
               <div className="relative">
-                <div className="relative overflow-hidden rounded-xl shadow-lg transform hover:scale-105 transition-transform duration-300">
+                <div className="relative overflow-hidden rounded-xl shadow-lg transition-transform duration-300">
                   <Image
-                    src="/placeholder.svg?height=240&width=200"
+                    src="https://avatars.githubusercontent.com/u/147980956?v=4"
                     alt="Profile"
                     width={200}
                     height={240}
-                    className="object-cover"
+                    className="object-cover w-full h-full opacity-100"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-green-600/20 to-transparent" />
                 </div>
