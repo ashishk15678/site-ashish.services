@@ -34,6 +34,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const techStack = [
   {
@@ -416,7 +417,7 @@ const LinkPreview = ({
   );
 };
 
-const MagneticButton = ({ children, className, ...props }: any) => {
+const MagneticButton = ({ children, className, link, ...props }: any) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
@@ -1026,6 +1027,7 @@ export default function Portfolio() {
   const [isDark, setIsDark] = useState(false);
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -1089,7 +1091,7 @@ export default function Portfolio() {
             variant="outline"
             size="sm"
             onClick={() => setIsDark(!isDark)}
-            className="rounded-full border-green-200 hover:bg-green-50 dark:border-green-800 dark:hover:bg-green-900"
+            className="rounded-full border-green-200 hover:bg-green-50 dark:border-green-800 dark:text-white  dark:hover:bg-green-900 dark:hover:text-white"
           >
             {isDark ? (
               <Sun className="h-4 w-4" />
@@ -1167,6 +1169,11 @@ export default function Portfolio() {
                       tronlab.in
                     </LinkPreview>
                   </p>
+                  <Link href="https://x.com/ashishonsol">
+                    <p className="text-sm hover:underline">
+                      Also available on X
+                    </p>
+                  </Link>
                 </div>
                 <div className="flex gap-3">
                   <Link href="mailto:ashish@ashish.services" className="flex-1">
@@ -1179,14 +1186,16 @@ export default function Portfolio() {
                       <span className="truncate">hi@ashish.services</span>
                     </MagneticButton>
                   </Link>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="border-green-200 hover:bg-green-50 dark:border-green-800 dark:hover:bg-green-900 dark:text-white flex-shrink-0"
-                  >
-                    <Github className="h-4 w-4 mr-1.5" />
-                    GitHub
-                  </Button>
+                  <Link href="https://github.com/ashishk15678">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="border-green-200 hover:bg-green-50 dark:border-green-800 dark:hover:bg-green-900 dark:text-white flex-shrink-0"
+                    >
+                      <Github className="h-4 w-4 mr-1.5" />
+                      GitHub
+                    </Button>
+                  </Link>
                 </div>
               </div>
               <div className="relative">
@@ -1463,11 +1472,24 @@ export default function Portfolio() {
               }`}
             >
               I'm always interested in new opportunities and exciting projects.
+              Book a call with me to discuss your project. Look forward to
+              working with you!
             </p>
-            <MagneticButton className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-6 py-3 rounded-lg font-medium shadow-xl hover:shadow-green-500/25 transition-all duration-300">
-              <Mail className="h-4 w-4 mr-2" />
-              Get In Touch
-            </MagneticButton>
+            <Link
+              href="https://cal.com/ashish15678/30min"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full"
+            >
+              <MagneticButton
+                className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 
+                text-white px-6 py-3 rounded-lg font-medium shadow-xl hover:shadow-green-500/25 
+                transition-all duration-300 w-full"
+              >
+                <Mail className="h-4 w-4 mr-2" />
+                Book a call
+              </MagneticButton>
+            </Link>
           </Card>
         </section>
 
