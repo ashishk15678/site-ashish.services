@@ -120,3 +120,116 @@
     @apply bg-background text-foreground;
   }
 }
+
+/*
+  This CSS defines the styles for the magnetic button
+  with the animated, colorful border and hover effects.
+*/
+
+.magnetic-border-container {
+  position: relative;
+  padding: 2px;
+  border-radius: 0.5rem;
+  /* Equivalent to rounded-lg */
+  overflow: hidden;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  /* Equivalent to shadow-lg */
+  transition: all 0.3s ease;
+}
+
+.magnetic-border-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 0.5rem;
+  /* Equivalent to rounded-lg */
+  background: conic-gradient(from 0deg,
+      rgb(255, 0, 0) 0%,
+      rgb(255, 165, 0) 15%,
+      rgb(255, 255, 0) 30%,
+      rgb(0, 255, 0) 45%,
+      rgb(0, 127, 255) 60%,
+      rgb(139, 0, 255) 75%,
+      rgb(255, 0, 0) 100%);
+  animation: gradient-spin 3s linear infinite;
+}
+
+.magnetic-border-container:hover {
+  padding: 3px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  /* Equivalent to hover:shadow-zinc-500/50 */
+}
+
+/* Keyframes for the gradient rotation animation */
+/* @keyframes gradient-spin {
+  to {
+    transform: rotate(360deg);
+  }
+} */
+
+@keyframes gradient-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+.animate-gradient-spin::before {
+  animation: gradient-spin 5s linear infinite;
+  /* Adjust the duration (e.g., 5s) and timing function (e.g., linear) as needed */
+  transform-origin: center;
+}
+
+.magnetic-button-content {
+  position: relative;
+  background-color: white;
+  color: #18181b;
+  /* Equivalent to text-zinc-900 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem 1rem;
+  /* Equivalent to px-4 py-2 */
+  border-radius: 0.375rem;
+  /* Equivalent to rounded-md */
+  font-size: 0.875rem;
+  /* Equivalent to text-sm */
+  font-weight: 500;
+  /* Equivalent to font-medium */
+  transition: transform 0.3s ease;
+}
+
+/* For dark mode */
+@media (prefers-color-scheme: dark) {
+  .magnetic-button-content {
+    background-color: #18181b;
+    /* Equivalent to dark:bg-zinc-900 */
+    color: white;
+  }
+}
+
+.magnetic-button-content:hover {
+  transform: scale(1.05);
+}
+
+.magnetic-button-icon {
+  height: 0.875rem;
+  /* Equivalent to h-3.5 */
+  width: 0.875rem;
+  /* Equivalent to w-3.5 */
+  margin-right: 0.375rem;
+  /* Equivalent to mr-1.5 */
+  flex-shrink: 0;
+}
+
+
+
+
+
+

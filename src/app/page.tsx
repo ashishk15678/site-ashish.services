@@ -22,6 +22,7 @@ import {
   Code,
   Briefcase,
   MessageCircle,
+  Video,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -39,51 +40,51 @@ import { useRouter } from "next/navigation";
 const techStack = [
   {
     name: "JavaScript",
-    color: "bg-green-50 text-green-700 border-green-200 hover:bg-green-100",
+    color: "bg-zinc-50 text-zinc-700 border-zinc-200 hover:bg-zinc-100",
   },
   {
     name: "TypeScript",
-    color: "bg-green-50 text-green-700 border-green-200 hover:bg-green-100",
+    color: "bg-zinc-50 text-zinc-700 border-zinc-200 hover:bg-zinc-100",
   },
   {
     name: "React",
-    color: "bg-green-50 text-green-700 border-green-200 hover:bg-green-100",
+    color: "bg-zinc-50 text-zinc-700 border-zinc-200 hover:bg-zinc-100",
   },
   {
     name: "Next.js",
-    color: "bg-green-50 text-green-700 border-green-200 hover:bg-green-100",
+    color: "bg-zinc-50 text-zinc-700 border-zinc-200 hover:bg-zinc-100",
   },
   {
     name: "Node.js",
-    color: "bg-green-50 text-green-700 border-green-200 hover:bg-green-100",
+    color: "bg-zinc-50 text-zinc-700 border-zinc-200 hover:bg-zinc-100",
   },
   {
     name: "Python",
-    color: "bg-green-50 text-green-700 border-green-200 hover:bg-green-100",
+    color: "bg-zinc-50 text-zinc-700 border-zinc-200 hover:bg-zinc-100",
   },
   {
     name: "PostgreSQL",
-    color: "bg-green-50 text-green-700 border-green-200 hover:bg-green-100",
+    color: "bg-zinc-50 text-zinc-700 border-zinc-200 hover:bg-zinc-100",
   },
   {
     name: "MongoDB",
-    color: "bg-green-50 text-green-700 border-green-200 hover:bg-green-100",
+    color: "bg-zinc-50 text-zinc-700 border-zinc-200 hover:bg-zinc-100",
   },
   {
     name: "AWS",
-    color: "bg-green-50 text-green-700 border-green-200 hover:bg-green-100",
+    color: "bg-zinc-50 text-zinc-700 border-zinc-200 hover:bg-zinc-100",
   },
   {
     name: "Docker",
-    color: "bg-green-50 text-green-700 border-green-200 hover:bg-green-100",
+    color: "bg-zinc-50 text-zinc-700 border-zinc-200 hover:bg-zinc-100",
   },
   {
     name: "Web3",
-    color: "bg-green-50 text-blue-700 border-blue-200 hover:bg-blue-100",
+    color: "bg-zinc-50 text-blue-700 border-blue-200 hover:bg-blue-100",
   },
   {
     name: "Rust",
-    color: "bg-green-50 text-blue-700 border-blue-200 hover:bg-blue-100",
+    color: "bg-zinc-50 text-blue-700 border-blue-200 hover:bg-blue-100",
   },
   {
     name: "Solana",
@@ -98,16 +99,16 @@ const techStack = [
 const projects = [
   {
     id: 1,
-    title: "E-Commerce Platform",
+    title: "Db from scratch",
     description:
-      "A full-stack e-commerce solution with React, Node.js, and Stripe integration. Features include user authentication, product management, and order processing.",
+      "A full fledged database system designed completely from scratch",
     image: "/placeholder.svg?height=300&width=500",
-    tags: ["React", "Node.js", "MongoDB", "Stripe"],
-    github: "https://github.com/username/ecommerce",
-    live: "https://ecommerce-demo.com",
+    tags: ["Rust","db","database"],
+    github: "https://github.com/ashishk15678/db",
+    live: "#",
     stars: 124,
     forks: 32,
-    gradient: "from-green-400 to-emerald-600",
+    gradient: "from-zinc-400 to-zinc-600",
   },
   {
     id: 2,
@@ -120,7 +121,7 @@ const projects = [
     live: "https://taskmanager-demo.com",
     stars: 89,
     forks: 21,
-    gradient: "from-emerald-400 to-teal-600",
+    gradient: "from-zinc-400 to-teal-600",
   },
   {
     id: 3,
@@ -133,7 +134,7 @@ const projects = [
     live: "https://ai-chat-demo.com",
     stars: 156,
     forks: 43,
-    gradient: "from-teal-400 to-green-600",
+    gradient: "from-teal-400 to-zinc-600",
   },
 ];
 
@@ -161,261 +162,6 @@ const dockItems = [
   { id: "projects", icon: Briefcase, label: "Projects", href: "#projects" },
   { id: "contact", icon: MessageCircle, label: "Contact", href: "#contact" },
 ];
-
-// Add this before the LinkPreview component
-const previewCache = new Map<string, { src: string; timestamp: number }>();
-const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
-const PREFETCH_QUEUE: string[] = [];
-let isPrefetching = false;
-
-const prefetchPreview = async (url: string) => {
-  if (previewCache.has(url)) {
-    const cached = previewCache.get(url)!;
-    if (Date.now() - cached.timestamp < CACHE_DURATION) {
-      console.log("Using cached preview for:", url);
-      return cached.src;
-    }
-  }
-
-  try {
-    console.log("Fetching preview for:", url);
-    const response = await fetch(
-      `https://api.microlink.io/?url=${encodeURIComponent(
-        url
-      )}&screenshot=true&meta=false&embed=screenshot.url&width=800&height=600`
-    );
-    const data = await response.json();
-    console.log("Received preview data:", data);
-
-    if (data.status === "success" && data.data.screenshot?.url) {
-      const previewUrl = data.data.screenshot.url;
-      console.log("Preview URL:", previewUrl);
-      previewCache.set(url, {
-        src: previewUrl,
-        timestamp: Date.now(),
-      });
-      return previewUrl;
-    }
-    throw new Error("Failed to fetch preview: No screenshot URL in response");
-  } catch (error) {
-    console.error("Error prefetching preview:", error);
-    return null;
-  }
-};
-
-const processPrefetchQueue = async () => {
-  if (isPrefetching || PREFETCH_QUEUE.length === 0) return;
-
-  isPrefetching = true;
-  while (PREFETCH_QUEUE.length > 0) {
-    const url = PREFETCH_QUEUE.shift()!;
-    await prefetchPreview(url);
-    // Add a small delay between requests to avoid rate limiting
-    await new Promise((resolve) => setTimeout(resolve, 100));
-  }
-  isPrefetching = false;
-};
-
-const LinkPreview = ({
-  href,
-  title,
-  description,
-  image,
-  children,
-}: {
-  href: string;
-  title: string;
-  description: string;
-  image?: string;
-  children: React.ReactNode;
-}) => {
-  const [showPreview, setShowPreview] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [previewSrc, setPreviewSrc] = useState<string | null>(null);
-  const [previewError, setPreviewError] = useState<string | null>(null);
-
-  // Prefetch on mount
-  useEffect(() => {
-    if (!PREFETCH_QUEUE.includes(href)) {
-      console.log("Adding to prefetch queue:", href);
-      PREFETCH_QUEUE.push(href);
-      processPrefetchQueue();
-    }
-  }, [href]);
-
-  // Handle preview display
-  useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
-
-    const loadPreview = async () => {
-      if (!showPreview) return;
-
-      setIsLoading(true);
-      setError(false);
-      setPreviewError(null);
-
-      try {
-        // First check cache
-        const cached = previewCache.get(href);
-        if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
-          console.log("Using cached preview for hover:", href);
-          setPreviewSrc(cached.src);
-          setIsLoading(false);
-          return;
-        }
-
-        // If not in cache, fetch it
-        console.log("Fetching preview for hover:", href);
-        const src = await prefetchPreview(href);
-        if (src) {
-          console.log("Setting preview src:", src);
-          setPreviewSrc(src);
-        } else {
-          throw new Error("Failed to load preview: No preview URL received");
-        }
-      } catch (err) {
-        console.error("Error loading preview:", err);
-        setError(true);
-        setPreviewError(
-          err instanceof Error ? err.message : "Failed to load preview"
-        );
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    if (showPreview) {
-      timeoutId = setTimeout(loadPreview, 100);
-    }
-
-    return () => {
-      if (timeoutId) clearTimeout(timeoutId);
-    };
-  }, [showPreview, href]);
-
-  const handleImageError = (
-    e: React.SyntheticEvent<HTMLImageElement, Event>
-  ) => {
-    console.error("Image load error:", e);
-    setError(true);
-    setPreviewError("Failed to load preview image");
-    const target = e.target as HTMLImageElement;
-    target.src = "/placeholder.svg";
-  };
-
-  return (
-    <div className="relative inline-block">
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-green-600 hover:text-green-700 underline decoration-green-300 hover:decoration-green-500 transition-colors"
-        onMouseEnter={() => setShowPreview(true)}
-        onMouseLeave={() => setShowPreview(false)}
-      >
-        {children}
-      </a>
-      {showPreview && (
-        <div className="absolute bottom-full left-0 mb-2 w-96 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl z-50 overflow-hidden transform -translate-x-1/4">
-          {isLoading ? (
-            <div className="p-4 animate-pulse">
-              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-2"></div>
-              <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-full mb-2"></div>
-              <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div>
-            </div>
-          ) : error ? (
-            <div className="p-4">
-              <div className="flex items-start space-x-3">
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-red-100 dark:bg-red-900 rounded-lg flex items-center justify-center">
-                    <Globe className="w-6 h-6 text-red-600 dark:text-red-400" />
-                  </div>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100 truncate">
-                    {title}
-                  </h4>
-                  <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 line-clamp-2">
-                    {description}
-                  </p>
-                  {previewError && (
-                    <p className="text-xs text-red-500 dark:text-red-400 mt-1">
-                      {previewError}
-                    </p>
-                  )}
-                  <p className="text-xs text-green-600 dark:text-green-400 mt-2 truncate">
-                    {href}
-                  </p>
-                </div>
-              </div>
-            </div>
-          ) : previewSrc ? (
-            <div>
-              <div className="relative h-48 w-full bg-gray-100 dark:bg-gray-800 overflow-hidden">
-                <img
-                  src={previewSrc}
-                  alt={`Preview of ${title}`}
-                  className="w-full h-full object-cover"
-                  onError={handleImageError}
-                  crossOrigin="anonymous"
-                  loading="lazy"
-                />
-                {isLoading && (
-                  <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
-                  </div>
-                )}
-              </div>
-              <div className="p-4">
-                <div className="flex items-start space-x-3">
-                  <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center">
-                      <Globe className="w-6 h-6 text-green-600 dark:text-green-400" />
-                    </div>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100 truncate">
-                      {title}
-                    </h4>
-                    <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 line-clamp-2">
-                      {description}
-                    </p>
-                    <p className="text-xs text-green-600 dark:text-green-400 mt-2 truncate">
-                      {href}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="p-4">
-              <div className="flex items-start space-x-3">
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center">
-                    <Globe className="w-6 h-6 text-green-600 dark:text-green-400" />
-                  </div>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100 truncate">
-                    {title}
-                  </h4>
-                  <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 line-clamp-2">
-                    {description}
-                  </p>
-                  <p className="text-xs text-green-600 dark:text-green-400 mt-2 truncate">
-                    {href}
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-          <div className="absolute -bottom-1 left-8 w-2 h-2 bg-white dark:bg-gray-900 border-r border-b border-gray-200 dark:border-gray-700 transform rotate-45"></div>
-        </div>
-      )}
-    </div>
-  );
-};
 
 const MagneticButton = ({ children, className, link, ...props }: any) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -448,21 +194,22 @@ const MagneticButton = ({ children, className, link, ...props }: any) => {
     <button
       ref={buttonRef}
       className={`relative inline-flex items-center justify-center transition-all duration-300 ease-out ${className} ${
-        isHovered ? "scale-110 shadow-2xl" : ""
+        isHovered ? " shadow-md" : ""
       }`}
-      style={{
-        transform: `translate(${position.x}px, ${position.y}px) ${
-          isHovered ? "scale(1.1)" : "scale(1)"
-        }`,
-      }}
+      //style={{
+        //transform: `translate(${position.x}px, ${position.y}px) ${
+         // isHovered ? "scale(0.9)" : "scale(1)"
+      //  }`,
+      // }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onMouseEnter={handleMouseEnter}
       {...props}
     >
-      {isHovered && (
-        <div className="absolute inset-0 bg-green-400 rounded-md blur-xl opacity-30 animate-pulse"></div>
+      {/** {isHovered && (
+        <div className="absolute inset-0 bg-zinc-400 rounded-md blur-xl opacity-30 animate-pulse"></div>
       )}
+      */}
       {children}
     </button>
   );
@@ -480,7 +227,7 @@ const FloatingDock = () => {
 
   return (
     <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50">
-      <div className="bg-white/80 dark:bg-black/80 backdrop-blur-md border border-gray-200 dark:border-gray-800 rounded-2xl p-2 shadow-2xl">
+      <div className="bg-white/80 dark:bg-black/80 backdrop-blur-md border border-zinc-200 dark:border-zinc-800 rounded-2xl p-2 shadow-2xl">
         <div className="flex items-center space-x-1">
           {dockItems.map((item) => {
             const Icon = item.icon;
@@ -492,15 +239,15 @@ const FloatingDock = () => {
                 onMouseLeave={() => setActiveItem(null)}
                 className={`relative p-3 rounded-xl transition-all duration-300 ease-out ${
                   activeItem === item.id
-                    ? "bg-green-100 dark:bg-green-900 scale-125 -translate-y-2"
-                    : "hover:bg-gray-100 dark:hover:bg-gray-800 hover:scale-110"
+                    ? "bg-zinc-100 dark:bg-zinc-900 scale-125 -translate-y-2"
+                    : "hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:scale-110"
                 }`}
               >
                 <Icon
                   className={`w-5 h-5 transition-colors duration-300 ${
                     activeItem === item.id
-                      ? "text-green-600 dark:text-green-400"
-                      : "text-gray-600 dark:text-gray-400"
+                      ? "text-zinc-600 dark:text-zinc-400"
+                      : "text-zinc-600 dark:text-zinc-400"
                   }`}
                 />
                 {activeItem === item.id && (
@@ -584,7 +331,7 @@ const SnakeGame = () => {
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (!gameStarted || gameOver) return;
-
+      e.preventDefault()
       switch (e.key) {
         case "ArrowUp":
           if (direction.y === 0) setDirection({ x: 0, y: -1 });
@@ -624,22 +371,22 @@ const SnakeGame = () => {
   };
 
   return (
-    <Card className="p-4 bg-white border-gray-100 dark:bg-black dark:border-gray-800">
+    <Card className="p-4 bg-white border-zinc-100 dark:bg-black dark:border-zinc-800">
       <div className="text-center">
         <div className="flex items-center justify-center gap-2 mb-3">
-          <Gamepad2 className="w-5 h-5 text-green-600 dark:text-green-400" />
-          <h4 className="font-semibold text-gray-900 dark:text-gray-100">
+          <Gamepad2 className="w-5 h-5 text-zinc-600 dark:text-zinc-400" />
+          <h4 className="font-semibold text-zinc-900 dark:text-zinc-100">
             Snake Game
           </h4>
         </div>
 
         <div className="mb-3 flex justify-between text-sm">
-          <span className="dark:text-gray-300">Score: {score}</span>
-          <span className="dark:text-gray-300">High Score: {highScore}</span>
+          <span className="dark:text-zinc-300">Score: {score}</span>
+          <span className="dark:text-zinc-300">High Score: {highScore}</span>
         </div>
 
         <div
-          className="relative mx-auto mb-3 border-2 border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-900"
+          className="relative mx-auto mb-3 border-2 border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900"
           style={{ width: canvasSize, height: canvasSize }}
         >
           {/* Snake */}
@@ -648,8 +395,8 @@ const SnakeGame = () => {
               key={index}
               className={`absolute ${
                 index === 0
-                  ? "bg-green-600 dark:bg-green-500"
-                  : "bg-green-400 dark:bg-green-600"
+                  ? "bg-zinc-600 dark:bg-zinc-500"
+                  : "bg-zinc-400 dark:bg-zinc-600"
               } rounded-sm`}
               style={{
                 left: segment.x * (canvasSize / gridSize),
@@ -686,7 +433,7 @@ const SnakeGame = () => {
           <Button
             onClick={startGame}
             size="sm"
-            className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600"
+            className="bg-zinc-600 hover:bg-zinc-700 dark:bg-zinc-700 dark:hover:bg-zinc-600"
           >
             Start Game
           </Button>
@@ -694,145 +441,15 @@ const SnakeGame = () => {
           <Button
             onClick={resetGame}
             size="sm"
-            className="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600"
+            className="bg-zinc-600 hover:bg-zinc-700 dark:bg-zinc-700 dark:hover:bg-zinc-600"
           >
             Play Again
           </Button>
         ) : (
-          <p className="text-xs text-gray-600 dark:text-gray-400">
+          <p className="text-xs text-zinc-600 dark:text-zinc-400">
             Use arrow keys to play
           </p>
         )}
-      </div>
-    </Card>
-  );
-};
-
-const GitHubStats = () => {
-  const [githubData, setGithubData] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchGitHubData = async () => {
-      try {
-        const userResponse = await fetch(
-          "https://api.github.com/users/ashishk15678"
-        );
-        const userData = await userResponse.json();
-
-        const reposResponse = await fetch(
-          "https://api.github.com/users/ashishk15678/repos?sort=updated&per_page=6"
-        );
-        const reposData = await reposResponse.json();
-
-        setGithubData({
-          user: userData,
-          repos: reposData,
-        });
-      } catch (error) {
-        console.error("Error fetching GitHub data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchGitHubData();
-  }, []);
-
-  if (loading) {
-    return (
-      <Card className="p-5 bg-white border-gray-100 dark:bg-black dark:border-gray-800">
-        <div className="animate-pulse">
-          <div className="h-4 bg-gray-200 dark:bg-gray-800 rounded w-1/3 mb-4"></div>
-          <div className="space-y-3">
-            <div className="h-3 bg-gray-200 dark:bg-gray-800 rounded"></div>
-            <div className="h-3 bg-gray-200 dark:bg-gray-800 rounded w-5/6"></div>
-            <div className="h-3 bg-gray-200 dark:bg-gray-800 rounded w-4/6"></div>
-          </div>
-        </div>
-      </Card>
-    );
-  }
-
-  return (
-    <Card className="p-5 bg-white border-gray-100 dark:bg-black dark:border-gray-800">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-        <div className="text-center">
-          <div className="text-2xl font-bold text-green-600 dark:text-green-400">
-            {githubData?.user?.public_repos || 0}
-          </div>
-          <div className="text-xs text-gray-600 dark:text-gray-400">
-            Repositories
-          </div>
-        </div>
-        <div className="text-center">
-          <div className="text-2xl font-bold text-green-600 dark:text-green-400">
-            {githubData?.user?.followers || 0}
-          </div>
-          <div className="text-xs text-gray-600 dark:text-gray-400">
-            Followers
-          </div>
-        </div>
-        <div className="text-center">
-          <div className="text-2xl font-bold text-green-600 dark:text-green-400">
-            {githubData?.user?.following || 0}
-          </div>
-          <div className="text-xs text-gray-600 dark:text-gray-400">
-            Following
-          </div>
-        </div>
-        <div className="text-center">
-          <div className="text-2xl font-bold text-green-600 dark:text-green-400">
-            {githubData?.repos?.reduce(
-              (acc: number, repo: any) => acc + (repo.stargazers_count || 0),
-              0
-            ) || 0}
-          </div>
-          <div className="text-xs text-gray-600 dark:text-gray-400">
-            Total Stars
-          </div>
-        </div>
-      </div>
-
-      <div className="space-y-3">
-        <h4 className="font-semibold text-gray-900 dark:text-gray-100 text-sm">
-          Recent Repositories
-        </h4>
-        {githubData?.repos?.slice(0, 3).map((repo: any) => (
-          <div
-            key={repo.id}
-            className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-lg"
-          >
-            <div className="flex-1">
-              <div className="flex items-center gap-2">
-                <h5 className="font-medium text-sm text-gray-900 dark:text-gray-100">
-                  {repo.name}
-                </h5>
-                {repo.language && (
-                  <Badge
-                    variant="secondary"
-                    className="text-xs px-2 py-0.5 dark:bg-gray-800 dark:text-gray-300"
-                  >
-                    {repo.language}
-                  </Badge>
-                )}
-              </div>
-              <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 line-clamp-1">
-                {repo.description}
-              </p>
-            </div>
-            <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
-              <div className="flex items-center gap-1">
-                <Star className="h-3 w-3" />
-                {repo.stargazers_count}
-              </div>
-              <div className="flex items-center gap-1">
-                <GitFork className="h-3 w-3" />
-                {repo.forks_count}
-              </div>
-            </div>
-          </div>
-        ))}
       </div>
     </Card>
   );
@@ -847,7 +464,7 @@ const BackgroundElements = ({ scrollProgress }: { scrollProgress: number }) => {
         style={{
           backgroundImage: `
             linear-gradient(to right, rgba(34, 197, 94, 0.1) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(34, 197, 94, 0.1) 1px, transparent 1px)
+            linear-gradient(to bottom, rgba(34, 197, 94, 0.3) 1px, transparent 1px)
           `,
           backgroundSize: `${40 + scrollProgress * 0.6}px ${
             40 + scrollProgress * 0.6
@@ -878,120 +495,6 @@ const BackgroundElements = ({ scrollProgress }: { scrollProgress: number }) => {
           transformOrigin: "center top",
         }}
       ></div>
-
-      {/* Floating shapes */}
-      <div className="absolute inset-0">
-        {/* Circles */}
-        {Array.from({ length: 15 }).map((_, index) => (
-          <div
-            key={`circle-${index}`}
-            className="absolute rounded-full bg-gradient-to-br from-green-300/10 to-emerald-500/10 dark:from-green-700/10 dark:to-emerald-900/10 animate-float"
-            style={{
-              width: `${30 + Math.random() * 70}px`,
-              height: `${30 + Math.random() * 70}px`,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDuration: `${15 + Math.random() * 20}s`,
-              animationDelay: `${index * -2}s`,
-              opacity: 0.4,
-              boxShadow: "0 0 20px rgba(52, 211, 153, 0.1)",
-            }}
-          ></div>
-        ))}
-
-        {/* Squares */}
-        {Array.from({ length: 10 }).map((_, index) => (
-          <div
-            key={`square-${index}`}
-            className="absolute bg-gradient-to-br from-green-300/10 to-emerald-500/10 dark:from-green-700/10 dark:to-emerald-900/10 animate-float"
-            style={{
-              width: `${20 + Math.random() * 40}px`,
-              height: `${20 + Math.random() * 40}px`,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              transform: `rotate(${Math.random() * 360}deg)`,
-              animationDuration: `${20 + Math.random() * 20}s`,
-              animationDelay: `${index * -1.5}s`,
-              opacity: 0.3,
-              boxShadow: "0 0 20px rgba(52, 211, 153, 0.1)",
-            }}
-          ></div>
-        ))}
-
-        {/* Triangles (CSS triangles) */}
-        {Array.from({ length: 8 }).map((_, index) => {
-          const size = 20 + Math.random() * 30;
-          return (
-            <div
-              key={`triangle-${index}`}
-              className="absolute animate-float"
-              style={{
-                width: 0,
-                height: 0,
-                borderLeft: `${size / 2}px solid transparent`,
-                borderRight: `${size / 2}px solid transparent`,
-                borderBottom: `${size}px solid rgba(52, 211, 153, 0.1)`,
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                transform: `rotate(${Math.random() * 360}deg)`,
-                animationDuration: `${25 + Math.random() * 20}s`,
-                animationDelay: `${index * -3}s`,
-                opacity: 0.3,
-                filter: "blur(1px)",
-              }}
-            ></div>
-          );
-        })}
-      </div>
-
-      {/* Tree branches */}
-      <div className="absolute inset-0">
-        {/* Main branch */}
-        <div
-          className="absolute right-[10%] top-0 w-0.5 h-full bg-gradient-to-b from-green-400 to-emerald-600 opacity-20 shadow-[0_0_15px_rgba(52,211,153,0.3)] transition-all duration-1000"
-          style={{
-            filter: "blur(0.5px)",
-          }}
-        ></div>
-
-        {/* Horizontal branches */}
-        {[15, 30, 45, 60, 75, 90].map((position, index) => (
-          <div
-            key={index}
-            className="absolute right-[10%] w-[15vw] h-0.5 bg-gradient-to-r from-green-400 to-transparent opacity-20 shadow-[0_0_10px_rgba(52,211,153,0.2)] transition-all duration-1000"
-            style={{
-              top: `${position}%`,
-              filter: "blur(0.5px)",
-            }}
-          ></div>
-        ))}
-
-        {/* Diagonal branches */}
-        {[25, 50, 75].map((position, index) => (
-          <div
-            key={index}
-            className="absolute right-[10%] w-[10vw] h-0.5 bg-gradient-to-r from-green-400 to-transparent opacity-20 shadow-[0_0_10px_rgba(52,211,153,0.2)] transition-all duration-1000 origin-right"
-            style={{
-              top: `${position}%`,
-              transform: index % 2 === 0 ? "rotate(-30deg)" : "rotate(30deg)",
-              filter: "blur(0.5px)",
-            }}
-          ></div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const ProgressIndicator = ({ scrollProgress }: { scrollProgress: number }) => {
-  return (
-    <div className="fixed left-4 top-1/2 transform -translate-y-1/2 z-40">
-      <div className="h-40 w-1 bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden">
-        <div
-          className="w-full bg-gradient-to-b from-green-400 to-emerald-600 transition-all duration-300 ease-out rounded-full"
-          style={{ height: `${scrollProgress}%` }}
-        ></div>
-      </div>
     </div>
   );
 };
@@ -999,15 +502,15 @@ const ProgressIndicator = ({ scrollProgress }: { scrollProgress: number }) => {
 const GlowingFooter = () => {
   return (
     <footer className="relative py-12 overflow-hidden z-1">
-      <div className="inset-0 green-50/20 dark:to-green-900/10"></div>
+      <div className="inset-0 zinc-50/20 dark:to-zinc-900/10"></div>
       <div className=" px-4 sm:px-6">
         <div className="relative">
           {/* Glow effect */}
-          <div className="absolute inset-0 blur-3xl bg-gradient-to-r from-green-400 via-emerald-500 to-green-600 opacity-30 dark:opacity-40 rounded-full transform"></div>
+          <div className="absolute inset-0 blur-3xl bg-gradient-to-r from-emerald-400 via-emerald-500 to-emerald-600 opacity-30 dark:opacity-40 rounded-full transform"></div>
 
           {/* Text with gradient */}
           <h2
-            className=" text-[18rem] font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-emerald-500 to-green-600
+            className=" text-[18rem] font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-emerald-500 to-emerald-600
           [text-shadow:0_0_10px_rgba(52,211,153,0.5)] flex items-center justify-center
           "
           >
@@ -1015,8 +518,10 @@ const GlowingFooter = () => {
           </h2>
         </div>
 
-        <p className="mt-6 text-sm text-gray-600 dark:text-gray-400">
-          © {new Date().getFullYear()} • All rights reserved
+        <p className="mt-6 text-sm text-zinc-600 dark:text-zinc-400">
+          {" "}
+          <BackgroundElements scrollProgress={0} />
+          All rights reserved
         </p>
       </div>
     </footer>
@@ -1026,61 +531,40 @@ const GlowingFooter = () => {
 export default function Portfolio() {
   const [isDark, setIsDark] = useState(false);
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const router = useRouter();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const totalHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
-      const progress = (window.scrollY / totalHeight) * 100;
-      setScrollProgress(progress);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   return (
     <div
       className={`min-h-screen transition-colors duration-300 ${
-        isDark ? "dark bg-black" : "bg-gray-50"
+        isDark ? "dark bg-zinc-900" : "bg-zinc-50"
       }`}
     >
-      {/* Background Elements */}
-      <BackgroundElements scrollProgress={scrollProgress} />
-
-      {/* Progress Indicator */}
-      <ProgressIndicator scrollProgress={scrollProgress} />
-
       {/* Floating Dock */}
       <FloatingDock />
 
       {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6">
+      <div className="max-w-md border-x-2 border-zinc-100 dark:border-zinc-800 mx-auto px-4 sm:px-6 py-6">
         {/* Header */}
         <header className="flex justify-between items-center mb-8" id="home">
           <div className="flex items-center space-x-3">
-            <Avatar className="h-10 w-10 ring-2 ring-green-500 ring-offset-2 dark:ring-offset-black">
+            <Avatar className="h-10 w-10 ring-2 ring-zinc-500 ring-offset-2 dark:ring-offset-black">
               <AvatarImage
                 src="https://avatars.githubusercontent.com/u/147980956?v=4"
                 alt="Profile"
               />
-              <AvatarFallback className="bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300">
+              <AvatarFallback className="bg-zinc-100 text-zinc-700 dark:bg-zinc-900 dark:text-zinc-300">
                 AS
               </AvatarFallback>
             </Avatar>
             <div>
               <h1
-                className={`text-xl font-semibold ${
-                  isDark ? "text-white" : "text-gray-900"
-                }`}
+                className={`text-xl font-semibold text-green-500
+                `}
               >
                 Ashish
               </h1>
               <p
                 className={`text-sm ${
-                  isDark ? "text-gray-300" : "text-gray-600"
+                  isDark ? "text-zinc-300" : "text-zinc-600"
                 }`}
               >
                 Full Stack Developer
@@ -1091,7 +575,7 @@ export default function Portfolio() {
             variant="outline"
             size="sm"
             onClick={() => setIsDark(!isDark)}
-            className="rounded-full border-green-200 hover:bg-green-50 dark:border-green-800 dark:text-white  dark:hover:bg-green-900 dark:hover:text-white"
+            className="rounded-full border-zinc-200 hover:bg-zinc-50 dark:border-zinc-800 dark:text-white  dark:hover:bg-zinc-900 dark:hover:text-white"
           >
             {isDark ? (
               <Sun className="h-4 w-4" />
@@ -1105,44 +589,44 @@ export default function Portfolio() {
         <section className="mb-12" id="about">
           <Card
             className={`p-6 ${
-              isDark ? "bg-black border-gray-800" : "bg-white border-gray-100"
-            } shadow-sm hover:shadow-md transition-shadow duration-300 backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90`}
+              isDark ? "bg-black border-zinc-800" : "bg-white border-none"
+            } shadow-none transition-shadow duration-300 backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90`}
           >
-            <div className="grid md:grid-cols-3 gap-6 items-center">
-              <div className="md:col-span-2">
+            <div className="items-center">
+              <div className="w-full">
                 <h2
                   className={`text-2xl font-semibold mb-3 ${
-                    isDark ? "text-white" : "text-gray-900"
+                    isDark ? "text-white" : "text-zinc-900"
                   }`}
                 >
                   Building Digital Experiences
                 </h2>
                 <p
                   className={`text-sm mb-4 ${
-                    isDark ? "text-gray-300" : "text-gray-600"
+                    isDark ? "text-zinc-300" : "text-zinc-600"
                   } leading-relaxed`}
                 >
                   I'm a passionate full-stack developer specializing in creating
                   beautiful and functional web applications. With 2+ years of
-                  experience, I've worked with startups and enterprises to bring
+                  experience, I've worked with startups as freelancer to bring 
                   their ideas to life.
                 </p>
                 <div className="flex flex-wrap gap-3 mb-4">
                   <div className="flex items-center gap-1.5">
-                    <MapPin className="h-3.5 w-3.5 text-green-500 dark:text-green-400" />
+                    <MapPin className="h-3.5 w-3.5 text-zinc-500 dark:text-zinc-400" />
                     <span
                       className={`text-sm ${
-                        isDark ? "text-gray-300" : "text-gray-600"
+                        isDark ? "text-zinc-300" : "text-zinc-600"
                       }`}
                     >
                       Greater Noida, India
                     </span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <Calendar className="h-3.5 w-3.5 text-green-500 dark:text-green-400" />
+                    <Calendar className="h-3.5 w-3.5 text-green-500 text-shadow-green-500" />
                     <span
-                      className={`text-sm ${
-                        isDark ? "text-gray-300" : "text-gray-600"
+                      className={`text-sm font-extrabold ${
+                        isDark ? "text-green-500" : "text-green-500"
                       }`}
                     >
                       Available for work
@@ -1152,62 +636,69 @@ export default function Portfolio() {
                 <div className="space-y-2 mb-4">
                   <p
                     className={`text-sm ${
-                      isDark ? "text-gray-300" : "text-gray-600"
+                      isDark ? "text-zinc-300" : "text-zinc-600"
                     }`}
                   ></p>
                   <p
                     className={`text-sm ${
-                      isDark ? "text-gray-300" : "text-gray-600"
+                      isDark ? "text-zinc-300" : "text-zinc-600"
                     }`}
                   >
                     I write blogs on{" "}
-                    <LinkPreview
-                      href="https://tronlab.in"
-                      title="TronLab"
-                      description="Technical blog covering web development, programming tutorials, and industry insights. Latest articles on React, Node.js, and modern development practices."
-                    >
+                    <Link href="https://tronlab.in" title="TronLab">
                       tronlab.in
-                    </LinkPreview>
+                    </Link>
                   </p>
-                  <Link href="https://x.com/ashishonsol">
+                  <Link
+                    href="https://x.com/ashishonsol"
+                    prefetch={true}
+                    target="_blank"
+                  >
                     <p className="text-sm hover:underline">
                       Also available on X
                     </p>
                   </Link>
                 </div>
-                <div className="flex gap-3">
-                  <Link href="mailto:ashish@ashish.services" className="flex-1">
-                    <MagneticButton
-                      className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 
-                      text-white px-4 py-2 rounded-md text-sm font-medium shadow-lg hover:shadow-green-500/25 
-                      transition-all duration-300 w-full"
-                    >
-                      <Mail className="h-3.5 w-3.5 mr-1.5 flex-shrink-0" />
-                      <span className="truncate">hi@ashish.services</span>
-                    </MagneticButton>
-                  </Link>
+                <div className="flex flex-col gap-3">
                   <Link href="https://github.com/ashishk15678">
                     <Button
                       variant="outline"
                       size="sm"
-                      className="border-green-200 hover:bg-green-50 dark:border-green-800 dark:hover:bg-green-900 dark:text-white flex-shrink-0"
+                      className="w-full border-zinc-200 shadow-none bg-transparent flex-shrink-0"
                     >
                       <Github className="h-4 w-4 mr-1.5" />
                       GitHub
                     </Button>
                   </Link>
-                </div>
-              </div>
-              <div className="relative">
-                <div className="relative overflow-hidden rounded-xl shadow-lg transition-transform duration-300">
-                  <Image
-                    src="https://avatars.githubusercontent.com/u/147980956?v=4"
-                    alt="Profile"
-                    width={200}
-                    height={240}
-                    className="object-cover w-full h-full opacity-100"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-green-600/20 to-transparent" />
+
+                  <Link href="mailto:ashish@ashish.services" className="flex-1">
+                    <div
+                      className="
+    relative p-[2px] rounded-lg overflow-hidden
+    shadow-lg shadow-zinc-500/25
+    before:absolute before:inset-0 before:rounded-lg
+    before:bg-[conic-gradient(from_0deg,rgb(255,0,0)_0%,rgb(255,165,0)_15%,rgb(255,255,0)_30%,rgb(0,255,0)_45%,rgb(0,127,255)_60%,rgb(139,0,255)_75%,rgb(255,0,0)_100%)]
+    before:animate-gradient-spin
+    transition-all duration-300
+    hover:shadow-zinc-500/50
+  "
+                    >
+                      <MagneticButton
+                        className="
+      relative bg-white
+      dark:bg-zinc-900
+      ring-0 px-4 py-2 rounded-md text-sm font-medium
+      flex items-center justify-center
+      w-full h-full
+      transition-transform duration-300
+      
+    "
+                      >
+                        <Mail className="h-3.5 w-3.5 mr-1.5 flex-shrink-0" />
+                        <span className="truncate">Mail me</span>
+                      </MagneticButton>
+                    </div>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -1218,63 +709,61 @@ export default function Portfolio() {
         <section className="mb-12">
           <h3
             className={`text-lg font-semibold mb-4 ${
-              isDark ? "text-white" : "text-gray-900"
+              isDark ? "text-white" : "text-zinc-900"
             }`}
           >
             Education
           </h3>
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid md:grid-cols-1 gap-4">
             {education.map((edu, index) => (
-              <Card
+              <div
                 key={index}
-                className={`p-4 ${
-                  isDark
-                    ? "bg-black border-gray-800"
-                    : "bg-white border-gray-100"
-                } hover:shadow-md transition-shadow backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90`}
+                className={`p-4 rounded-xl border ${
+                  isDark ? "bg-black border-zinc-800" : " border-zinc-200"
+                } hover:shadow-sm transition-shadow backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90`}
               >
                 <div className="flex items-start gap-3">
-                  <div className="p-2 bg-green-100 dark:bg-green-900 rounded-lg">
-                    <GraduationCap className="w-5 h-5 text-green-600 dark:text-green-400" />
+                  <div className="p-2 bg-zinc-100 dark:bg-zinc-900 rounded-lg">
+                    <GraduationCap className="w-5 h-5 text-zinc-600 dark:text-zinc-400" />
                   </div>
                   <div className="flex-1">
                     <h4
                       className={`font-semibold text-sm ${
-                        isDark ? "text-white" : "text-gray-900"
+                        isDark ? "text-white" : "text-zinc-900"
                       }`}
                     >
                       {edu.degree}
                     </h4>
                     <p
                       className={`text-sm ${
-                        isDark ? "text-gray-300" : "text-gray-600"
+                        isDark ? "text-zinc-300" : "text-zinc-600"
                       }`}
                     >
                       {edu.school}
-                    </p>
-                    <p
-                      className={`text-xs ${
-                        isDark ? "text-gray-400" : "text-gray-500"
-                      }`}
-                    >
-                      {edu.year}
+                      <span
+                        className={`text-xs ml-4 ${
+                          isDark ? "text-zinc-400" : "text-zinc-500"
+                        }`}
+                      >
+                        ({edu.year})
+                      </span>
                     </p>
                     <p
                       className={`text-xs mt-1 ${
-                        isDark ? "text-gray-400" : "text-gray-600"
+                        isDark ? "text-zinc-400" : "text-zinc-600"
                       }`}
                     >
                       {edu.description}
                     </p>
                     <Badge
                       variant="secondary"
-                      className="mt-2 text-xs dark:bg-gray-800 dark:text-gray-300"
+                      className="mt-2 text-xs dark:bg-zinc-800 dark:text-zinc-300"
                     >
-                      GPA: {edu.gpa}
+                      GPA : {edu.gpa}
                     </Badge>
                   </div>
                 </div>
-              </Card>
+              </div>
             ))}
           </div>
         </section>
@@ -1283,7 +772,7 @@ export default function Portfolio() {
         <section className="mb-12" id="skills">
           <h3
             className={`text-lg font-semibold mb-4 ${
-              isDark ? "text-white" : "text-gray-900"
+              isDark ? "text-white" : "text-zinc-900"
             }`}
           >
             Technologies I Work With
@@ -1295,7 +784,7 @@ export default function Portfolio() {
                 variant="outline"
                 className={`px-3 py-1 text-xs font-medium border transition-all duration-200 hover:scale-105 hover:shadow-sm ${
                   isDark
-                    ? "bg-black text-gray-200 border-gray-800 hover:bg-gray-900"
+                    ? "bg-black text-zinc-200 border-zinc-800 hover:bg-zinc-900"
                     : tech.color
                 }`}
                 style={{ animationDelay: `${index * 30}ms` }}
@@ -1306,53 +795,27 @@ export default function Portfolio() {
           </div>
         </section>
 
-        {/* GitHub Stats */}
-        <section className="mb-12">
-          <h3
-            className={`text-lg font-semibold mb-4 ${
-              isDark ? "text-white" : "text-gray-900"
-            }`}
-          >
-            GitHub Activity
-          </h3>
-          <GitHubStats />
-        </section>
-
-        {/* Game Section */}
-        <section className="mb-12">
-          <h3
-            className={`text-lg font-semibold mb-4 ${
-              isDark ? "text-white" : "text-gray-900"
-            }`}
-          >
-            Take a Break - Play a Game!
-          </h3>
-          <SnakeGame />
-        </section>
-
         {/* Featured Projects */}
         <section className="mb-12" id="projects">
           <h3
             className={`text-lg font-semibold mb-4 ${
-              isDark ? "text-white" : "text-gray-900"
+              isDark ? "text-white" : "text-zinc-900"
             }`}
           >
             Featured Projects
           </h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="flex flex-col gap-6">
             {projects.map((project) => (
               <Card
                 key={project.id}
                 className={`group cursor-pointer transition-all duration-500 ease-out ${
                   hoveredProject === project.id
-                    ? "scale-110 shadow-2xl z-10 -rotate-1"
-                    : hoveredProject !== null
-                    ? "scale-95 opacity-60"
+                    ? "-rotate-1"
                     : "hover:shadow-lg"
                 } ${
                   isDark
-                    ? "bg-black border-gray-800"
-                    : "bg-white border-gray-100"
+                    ? "bg-black border-zinc-800"
+                    : "bg-white border-zinc-100"
                 } backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90`}
                 onMouseEnter={() => setHoveredProject(project.id)}
                 onMouseLeave={() => setHoveredProject(null)}
@@ -1379,7 +842,7 @@ export default function Portfolio() {
                       size="sm"
                       variant="secondary"
                       asChild
-                      className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-100 dark:bg-gray-800 dark:text-white"
+                      className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-100 dark:bg-zinc-800 dark:text-white"
                     >
                       <a
                         href={project.github}
@@ -1392,7 +855,7 @@ export default function Portfolio() {
                     </Button>
                     <Button
                       size="sm"
-                      className="bg-green-600 hover:bg-green-700 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-200 dark:bg-green-700 dark:hover:bg-green-600"
+                      className="bg-zinc-600 hover:bg-zinc-700 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-200 dark:bg-zinc-700 dark:hover:bg-zinc-600"
                       asChild
                     >
                       <a
@@ -1409,14 +872,14 @@ export default function Portfolio() {
                 <CardHeader className="pb-2">
                   <CardTitle
                     className={`text-base ${
-                      isDark ? "text-white" : "text-gray-900"
+                      isDark ? "text-white" : "text-zinc-900"
                     }`}
                   >
                     {project.title}
                   </CardTitle>
                   <CardDescription
                     className={`text-sm ${
-                      isDark ? "text-gray-400" : "text-gray-600"
+                      isDark ? "text-zinc-400" : "text-zinc-600"
                     }`}
                   >
                     {project.description}
@@ -1428,13 +891,13 @@ export default function Portfolio() {
                       <Badge
                         key={tag}
                         variant="secondary"
-                        className="text-xs px-2 py-0.5 bg-green-50 text-green-700 dark:bg-gray-800 dark:text-gray-300"
+                        className="text-xs px-2 py-0.5 bg-zinc-50 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"
                       >
                         {tag}
                       </Badge>
                     ))}
                   </div>
-                  <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+                  <div className="flex items-center justify-between text-xs text-zinc-500 dark:text-zinc-400">
                     <div className="flex items-center gap-3">
                       <div className="flex items-center gap-1">
                         <Star className="h-3 w-3" />
@@ -1452,23 +915,35 @@ export default function Portfolio() {
           </div>
         </section>
 
+        {/* Game Section */}
+        <section className="mb-12">
+          <h3
+            className={`text-lg font-semibold mb-4 ${
+              isDark ? "text-white" : "text-zinc-900"
+            }`}
+          >
+            Take a Break - Play a Game!
+          </h3>
+          <SnakeGame />
+        </section>
+
         {/* Contact Section */}
         <section id="contact" className="mb-12">
           <Card
             className={`p-6 text-center ${
-              isDark ? "bg-black border-gray-800" : "bg-white border-gray-100"
+              isDark ? "bg-black border-zinc-800" : "bg-white border-zinc-100"
             } backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90`}
           >
             <h3
               className={`text-lg font-semibold mb-3 ${
-                isDark ? "text-white" : "text-gray-900"
+                isDark ? "text-white" : "text-zinc-900"
               }`}
             >
               Let's Work Together
             </h3>
             <p
               className={`text-sm mb-4 ${
-                isDark ? "text-gray-300" : "text-gray-600"
+                isDark ? "text-zinc-300" : "text-zinc-600"
               }`}
             >
               I'm always interested in new opportunities and exciting projects.
@@ -1481,15 +956,43 @@ export default function Portfolio() {
               rel="noopener noreferrer"
               className="block w-full"
             >
-              <MagneticButton
-                className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 
-                text-white px-6 py-3 rounded-lg font-medium shadow-xl hover:shadow-green-500/25 
+              <div
+                className="
+    relative p-[2px] rounded-lg overflow-hidden
+    shadow-lg shadow-zinc-500/25
+    before:absolute before:inset-0 before:rounded-lg
+    before:bg-[conic-gradient(from_0deg,rgb(255,0,0)_0%,rgb(255,165,0)_15%,rgb(255,255,0)_30%,rgb(0,255,0)_45%,rgb(0,127,255)_60%,rgb(139,0,255)_75%,rgb(255,0,0)_100%)]
+    before:animate-gradient-spin
+    transition-all duration-300
+    hover:shadow-zinc-500/50
+  "
+              >
+                <MagneticButton
+                  className="
+      relative bg-white
+      dark:bg-zinc-900
+      ring-0 px-4 py-2 rounded-md text-sm font-medium
+      flex items-center justify-center
+      w-full h-full
+      transition-transform duration-300
+      
+    "
+                >
+                  <Video className="h-3.5 w-3.5 mr-1.5 flex-shrink-0" />
+                  <span className="truncate">Book a call</span>
+                </MagneticButton>
+              </div>
+            </Link>
+
+            {/* <MagneticButton
+                className="bg-gradient-to-r from-zinc-600 to-zinc-600 hover:from-zinc-700 hover:to-zinc-700 
+                text-white px-6 py-3 rounded-lg font-medium shadow-xl hover:shadow-zinc-500/25 
                 transition-all duration-300 w-full"
               >
                 <Mail className="h-4 w-4 mr-2" />
                 Book a call
               </MagneticButton>
-            </Link>
+            </Link> */}
           </Card>
         </section>
 

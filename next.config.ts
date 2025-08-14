@@ -5,6 +5,12 @@ const nextConfig: NextConfig = {
   images: {
     domains: ["avatars.githubusercontent.com"],
   },
+
+  experimental: {
+    optimizeCss: true,
+    optimizePackageImports: ["lucide-react"],
+    optimisticClientCache: true,
+  },
 };
 
 export default nextConfig;
