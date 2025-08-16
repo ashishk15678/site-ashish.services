@@ -36,6 +36,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useTheme } from "./providers";
 
 const techStack = [
   {
@@ -103,7 +104,7 @@ const projects = [
     description:
       "A full fledged database system designed completely from scratch",
     image: "/placeholder.svg?height=300&width=500",
-    tags: ["Rust","db","database"],
+    tags: ["Rust", "db", "database"],
     github: "https://github.com/ashishk15678/db",
     live: "#",
     stars: 124,
@@ -197,8 +198,8 @@ const MagneticButton = ({ children, className, link, ...props }: any) => {
         isHovered ? " shadow-md" : ""
       }`}
       //style={{
-        //transform: `translate(${position.x}px, ${position.y}px) ${
-         // isHovered ? "scale(0.9)" : "scale(1)"
+      //transform: `translate(${position.x}px, ${position.y}px) ${
+      // isHovered ? "scale(0.9)" : "scale(1)"
       //  }`,
       // }}
       onMouseMove={handleMouseMove}
@@ -331,7 +332,7 @@ const SnakeGame = () => {
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (!gameStarted || gameOver) return;
-      e.preventDefault()
+      e.preventDefault();
       switch (e.key) {
         case "ArrowUp":
           if (direction.y === 0) setDirection({ x: 0, y: -1 });
@@ -510,7 +511,7 @@ const GlowingFooter = () => {
 
           {/* Text with gradient */}
           <h2
-            className=" text-[18rem] font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-emerald-500 to-emerald-600
+            className=" text-[6rem] font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-emerald-500 to-emerald-600
           [text-shadow:0_0_10px_rgba(52,211,153,0.5)] flex items-center justify-center
           "
           >
@@ -529,151 +530,153 @@ const GlowingFooter = () => {
 };
 
 export default function Portfolio() {
-  const [isDark, setIsDark] = useState(false);
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
 
+  const { theme, setTheme } = useTheme();
+
   return (
-    <div
-      className={`min-h-screen transition-colors duration-300 ${
-        isDark ? "dark bg-zinc-900" : "bg-zinc-50"
-      }`}
-    >
+    <>
       {/* Floating Dock */}
       <FloatingDock />
-
       {/* Main Content */}
-      <div className="max-w-md border-x-2 border-zinc-100 dark:border-zinc-800 mx-auto px-4 sm:px-6 py-6">
-        {/* Header */}
-        <header className="flex justify-between items-center mb-8" id="home">
-          <div className="flex items-center space-x-3">
-            <Avatar className="h-10 w-10 ring-2 ring-zinc-500 ring-offset-2 dark:ring-offset-black">
-              <AvatarImage
-                src="https://avatars.githubusercontent.com/u/147980956?v=4"
-                alt="Profile"
-              />
-              <AvatarFallback className="bg-zinc-100 text-zinc-700 dark:bg-zinc-900 dark:text-zinc-300">
-                AS
-              </AvatarFallback>
-            </Avatar>
-            <div>
-              <h1
-                className={`text-xl font-semibold text-green-500
+      {/* Header */}
+      <header className="flex justify-between items-center mb-8" id="home">
+        <div className="flex items-center space-x-3">
+          <Avatar className="h-10 w-10 ring-2 ring-zinc-500 ring-offset-2 dark:ring-offset-black">
+            <AvatarImage
+              src="https://avatars.githubusercontent.com/u/147980956?v=4"
+              alt="Profile"
+            />
+            <AvatarFallback className="bg-zinc-100 text-zinc-700 dark:bg-zinc-900 dark:text-zinc-300">
+              AS
+            </AvatarFallback>
+          </Avatar>
+          <div>
+            <h1
+              className={`text-xl font-semibold text-green-500
                 `}
-              >
-                Ashish
-              </h1>
-              <p
-                className={`text-sm ${
-                  isDark ? "text-zinc-300" : "text-zinc-600"
-                }`}
-              >
-                Full Stack Developer
-              </p>
-            </div>
+            >
+              Ashish
+            </h1>
+            <p
+              className={`text-sm ${
+                theme == "dark" ? "text-zinc-300" : "text-zinc-600"
+              }`}
+            >
+              Full Stack Developer
+            </p>
           </div>
+        </div>
+        <div className="flex items-center space-x-1">
+          <Link href={"/blogs"} prefetch nonce="blog">
+            <Button variant={"link"} className="font-bold underline">
+              blogs
+            </Button>
+          </Link>
           <Button
             variant="outline"
             size="sm"
-            onClick={() => setIsDark(!isDark)}
+            onClick={() => setTheme(theme == "dark" ? "light" : "dark")}
             className="rounded-full border-zinc-200 hover:bg-zinc-50 dark:border-zinc-800 dark:text-white  dark:hover:bg-zinc-900 dark:hover:text-white"
           >
-            {isDark ? (
+            {theme == "dark" ? (
               <Sun className="h-4 w-4" />
             ) : (
               <Moon className="h-4 w-4" />
             )}
           </Button>
-        </header>
+        </div>
+      </header>
 
-        {/* Hero Section */}
-        <section className="mb-12" id="about">
-          <Card
-            className={`p-6 ${
-              isDark ? "bg-black border-zinc-800" : "bg-white border-none"
-            } shadow-none transition-shadow duration-300 backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90`}
-          >
-            <div className="items-center">
-              <div className="w-full">
-                <h2
-                  className={`text-2xl font-semibold mb-3 ${
-                    isDark ? "text-white" : "text-zinc-900"
+      {/* Hero Section */}
+      <section className="mb-12" id="about">
+        <Card
+          className={`p-6 ${
+            theme == "dark"
+              ? "bg-black border-zinc-800"
+              : "bg-white border-none"
+          } shadow-none transition-shadow duration-300 backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90`}
+        >
+          <div className="items-center">
+            <div className="w-full">
+              <h2
+                className={`text-2xl font-semibold mb-3 ${
+                  theme == "dark" ? "text-white" : "text-zinc-900"
+                }`}
+              >
+                Building Digital Experiences
+              </h2>
+              <p
+                className={`text-sm mb-4 ${
+                  theme == "dark" ? "text-zinc-300" : "text-zinc-600"
+                } leading-relaxed`}
+              >
+                I'm a passionate full-stack developer specializing in creating
+                beautiful and functional web applications. With 2+ years of
+                experience, I've worked with startups as freelancer to bring
+                their ideas to life.
+              </p>
+              <div className="flex flex-wrap gap-3 mb-4">
+                <div className="flex items-center gap-1.5">
+                  <MapPin className="h-3.5 w-3.5 text-zinc-500 dark:text-zinc-400" />
+                  <span
+                    className={`text-sm ${
+                      theme == "dark" ? "text-zinc-300" : "text-zinc-600"
+                    }`}
+                  >
+                    Greater Noida, India
+                  </span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <Calendar className="h-3.5 w-3.5 text-green-500 text-shadow-green-500" />
+                  <span
+                    className={`text-sm font-extrabold ${
+                      theme == "dark" ? "text-green-500" : "text-green-500"
+                    }`}
+                  >
+                    Available for work
+                  </span>
+                </div>
+              </div>
+              <div className="space-y-2 mb-4">
+                <p
+                  className={`text-sm ${
+                    theme == "dark" ? "text-zinc-300" : "text-zinc-600"
+                  }`}
+                ></p>
+                <p
+                  className={`text-sm ${
+                    theme == "dark" ? "text-zinc-300" : "text-zinc-600"
                   }`}
                 >
-                  Building Digital Experiences
-                </h2>
-                <p
-                  className={`text-sm mb-4 ${
-                    isDark ? "text-zinc-300" : "text-zinc-600"
-                  } leading-relaxed`}
-                >
-                  I'm a passionate full-stack developer specializing in creating
-                  beautiful and functional web applications. With 2+ years of
-                  experience, I've worked with startups as freelancer to bring 
-                  their ideas to life.
+                  I write blogs on{" "}
+                  <Link href="https://tronlab.in" title="TronLab">
+                    tronlab.in
+                  </Link>
                 </p>
-                <div className="flex flex-wrap gap-3 mb-4">
-                  <div className="flex items-center gap-1.5">
-                    <MapPin className="h-3.5 w-3.5 text-zinc-500 dark:text-zinc-400" />
-                    <span
-                      className={`text-sm ${
-                        isDark ? "text-zinc-300" : "text-zinc-600"
-                      }`}
-                    >
-                      Greater Noida, India
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <Calendar className="h-3.5 w-3.5 text-green-500 text-shadow-green-500" />
-                    <span
-                      className={`text-sm font-extrabold ${
-                        isDark ? "text-green-500" : "text-green-500"
-                      }`}
-                    >
-                      Available for work
-                    </span>
-                  </div>
-                </div>
-                <div className="space-y-2 mb-4">
-                  <p
-                    className={`text-sm ${
-                      isDark ? "text-zinc-300" : "text-zinc-600"
-                    }`}
-                  ></p>
-                  <p
-                    className={`text-sm ${
-                      isDark ? "text-zinc-300" : "text-zinc-600"
-                    }`}
+                <Link
+                  href="https://x.com/ashishonsol"
+                  prefetch={true}
+                  target="_blank"
+                >
+                  <p className="text-sm hover:underline">Also available on X</p>
+                </Link>
+              </div>
+              <div className="flex flex-col gap-3">
+                <Link href="https://github.com/ashishk15678">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-full border-zinc-200 shadow-none bg-transparent flex-shrink-0"
                   >
-                    I write blogs on{" "}
-                    <Link href="https://tronlab.in" title="TronLab">
-                      tronlab.in
-                    </Link>
-                  </p>
-                  <Link
-                    href="https://x.com/ashishonsol"
-                    prefetch={true}
-                    target="_blank"
-                  >
-                    <p className="text-sm hover:underline">
-                      Also available on X
-                    </p>
-                  </Link>
-                </div>
-                <div className="flex flex-col gap-3">
-                  <Link href="https://github.com/ashishk15678">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="w-full border-zinc-200 shadow-none bg-transparent flex-shrink-0"
-                    >
-                      <Github className="h-4 w-4 mr-1.5" />
-                      GitHub
-                    </Button>
-                  </Link>
+                    <Github className="h-4 w-4 mr-1.5" />
+                    GitHub
+                  </Button>
+                </Link>
 
-                  <Link href="mailto:ashish@ashish.services" className="flex-1">
-                    <div
-                      className="
+                <Link href="mailto:ashish@ashish.services" className="flex-1">
+                  <div
+                    className="
     relative p-[2px] rounded-lg overflow-hidden
     shadow-lg shadow-zinc-500/25
     before:absolute before:inset-0 before:rounded-lg
@@ -682,9 +685,9 @@ export default function Portfolio() {
     transition-all duration-300
     hover:shadow-zinc-500/50
   "
-                    >
-                      <MagneticButton
-                        className="
+                  >
+                    <MagneticButton
+                      className="
       relative bg-white
       dark:bg-zinc-900
       ring-0 px-4 py-2 rounded-md text-sm font-medium
@@ -693,271 +696,265 @@ export default function Portfolio() {
       transition-transform duration-300
       
     "
-                      >
-                        <Mail className="h-3.5 w-3.5 mr-1.5 flex-shrink-0" />
-                        <span className="truncate">Mail me</span>
-                      </MagneticButton>
-                    </div>
-                  </Link>
+                    >
+                      <Mail className="h-3.5 w-3.5 mr-1.5 flex-shrink-0" />
+                      <span className="truncate">Mail me</span>
+                    </MagneticButton>
+                  </div>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </Card>
+      </section>
+
+      {/* Education Section */}
+      <section className="mb-12">
+        <h3
+          className={`text-lg font-semibold mb-4 ${
+            theme == "dark" ? "text-white" : "text-zinc-900"
+          }`}
+        >
+          Education
+        </h3>
+        <div className="grid md:grid-cols-1 gap-4">
+          {education.map((edu, index) => (
+            <div
+              key={index}
+              className={`p-4 rounded-xl border ${
+                theme == "dark"
+                  ? "bg-black border-zinc-800"
+                  : " border-zinc-200"
+              } hover:shadow-sm transition-shadow backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90`}
+            >
+              <div className="flex items-start gap-3">
+                <div className="p-2 bg-zinc-100 dark:bg-zinc-900 rounded-lg">
+                  <GraduationCap className="w-5 h-5 text-zinc-600 dark:text-zinc-400" />
+                </div>
+                <div className="flex-1">
+                  <h4
+                    className={`font-semibold text-sm ${
+                      theme == "dark" ? "text-white" : "text-zinc-900"
+                    }`}
+                  >
+                    {edu.degree}
+                  </h4>
+                  <p
+                    className={`text-sm ${
+                      theme == "dark" ? "text-zinc-300" : "text-zinc-600"
+                    }`}
+                  >
+                    {edu.school}
+                    <span
+                      className={`text-xs ml-4 ${
+                        theme == "dark" ? "text-zinc-400" : "text-zinc-500"
+                      }`}
+                    >
+                      ({edu.year})
+                    </span>
+                  </p>
+                  <p className={`text-xs mt-1 `}>{edu.description}</p>
+                  <Badge
+                    variant="secondary"
+                    className="mt-2 text-xs dark:bg-zinc-800 dark:text-zinc-300"
+                  >
+                    GPA : {edu.gpa}
+                  </Badge>
                 </div>
               </div>
             </div>
-          </Card>
-        </section>
+          ))}
+        </div>
+      </section>
 
-        {/* Education Section */}
-        <section className="mb-12">
-          <h3
-            className={`text-lg font-semibold mb-4 ${
-              isDark ? "text-white" : "text-zinc-900"
-            }`}
-          >
-            Education
-          </h3>
-          <div className="grid md:grid-cols-1 gap-4">
-            {education.map((edu, index) => (
-              <div
-                key={index}
-                className={`p-4 rounded-xl border ${
-                  isDark ? "bg-black border-zinc-800" : " border-zinc-200"
-                } hover:shadow-sm transition-shadow backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90`}
-              >
-                <div className="flex items-start gap-3">
-                  <div className="p-2 bg-zinc-100 dark:bg-zinc-900 rounded-lg">
-                    <GraduationCap className="w-5 h-5 text-zinc-600 dark:text-zinc-400" />
-                  </div>
-                  <div className="flex-1">
-                    <h4
-                      className={`font-semibold text-sm ${
-                        isDark ? "text-white" : "text-zinc-900"
-                      }`}
+      {/* Tech Stack */}
+      <section className="mb-12" id="skills">
+        <h3
+          className={`text-lg font-semibold mb-4 ${
+            theme == "dark" ? "text-white" : "text-zinc-900"
+          }`}
+        >
+          Technologies I Work With
+        </h3>
+        <div className="flex flex-wrap gap-2">
+          {techStack.map((tech, index) => (
+            <Badge
+              key={tech.name}
+              variant="outline"
+              className={`px-3 py-1 text-xs font-medium border transition-all duration-200 hover:scale-105 hover:shadow-sm ${
+                theme == "dark"
+                  ? "bg-black text-zinc-200 border-zinc-800 hover:bg-zinc-900"
+                  : tech.color
+              }`}
+              style={{ animationDelay: `${index * 30}ms` }}
+            >
+              {tech.name}
+            </Badge>
+          ))}
+        </div>
+      </section>
+
+      {/* Featured Projects */}
+      <section className="mb-12" id="projects">
+        <h3
+          className={`text-lg font-semibold mb-4 ${
+            theme == "dark" ? "text-white" : "text-zinc-900"
+          }`}
+        >
+          Featured Projects
+        </h3>
+        <div className="flex flex-col gap-6">
+          {projects.map((project) => (
+            <Card
+              key={project.id}
+              className={`group cursor-pointer transition-all duration-500 ease-out ${
+                hoveredProject === project.id ? "-rotate-1" : "hover:shadow-lg"
+              } ${
+                theme == "dark"
+                  ? "bg-black border-zinc-800"
+                  : "bg-white border-zinc-100"
+              } backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90`}
+              onMouseEnter={() => setHoveredProject(project.id)}
+              onMouseLeave={() => setHoveredProject(null)}
+            >
+              <div className="relative overflow-hidden rounded-t-lg">
+                <div
+                  className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-20`}
+                ></div>
+                <Image
+                  src={project.image || "/placeholder.svg"}
+                  alt={project.title}
+                  width={500}
+                  height={300}
+                  className="object-cover w-full h-48 transition-transform duration-500 group-hover:scale-110"
+                />
+                <div
+                  className={`absolute inset-0 bg-black/0 group-hover:bg-black/60 transition-all duration-300 flex items-center justify-center space-x-3 ${
+                    hoveredProject === project.id ? "opacity-100" : "opacity-0"
+                  }`}
+                >
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    asChild
+                    className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-100 dark:bg-zinc-800 dark:text-white"
+                  >
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
-                      {edu.degree}
-                    </h4>
-                    <p
-                      className={`text-sm ${
-                        isDark ? "text-zinc-300" : "text-zinc-600"
-                      }`}
+                      <Github className="h-3.5 w-3.5 mr-1.5" />
+                      Code
+                    </a>
+                  </Button>
+                  <Button
+                    size="sm"
+                    className="bg-zinc-600 hover:bg-zinc-700 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-200 dark:bg-zinc-700 dark:hover:bg-zinc-600"
+                    asChild
+                  >
+                    <a
+                      href={project.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
-                      {edu.school}
-                      <span
-                        className={`text-xs ml-4 ${
-                          isDark ? "text-zinc-400" : "text-zinc-500"
-                        }`}
-                      >
-                        ({edu.year})
-                      </span>
-                    </p>
-                    <p
-                      className={`text-xs mt-1 ${
-                        isDark ? "text-zinc-400" : "text-zinc-600"
-                      }`}
-                    >
-                      {edu.description}
-                    </p>
-                    <Badge
-                      variant="secondary"
-                      className="mt-2 text-xs dark:bg-zinc-800 dark:text-zinc-300"
-                    >
-                      GPA : {edu.gpa}
-                    </Badge>
-                  </div>
+                      <ExternalLink className="h-3.5 w-3.5 mr-1.5" />
+                      Live
+                    </a>
+                  </Button>
                 </div>
               </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Tech Stack */}
-        <section className="mb-12" id="skills">
-          <h3
-            className={`text-lg font-semibold mb-4 ${
-              isDark ? "text-white" : "text-zinc-900"
-            }`}
-          >
-            Technologies I Work With
-          </h3>
-          <div className="flex flex-wrap gap-2">
-            {techStack.map((tech, index) => (
-              <Badge
-                key={tech.name}
-                variant="outline"
-                className={`px-3 py-1 text-xs font-medium border transition-all duration-200 hover:scale-105 hover:shadow-sm ${
-                  isDark
-                    ? "bg-black text-zinc-200 border-zinc-800 hover:bg-zinc-900"
-                    : tech.color
-                }`}
-                style={{ animationDelay: `${index * 30}ms` }}
-              >
-                {tech.name}
-              </Badge>
-            ))}
-          </div>
-        </section>
-
-        {/* Featured Projects */}
-        <section className="mb-12" id="projects">
-          <h3
-            className={`text-lg font-semibold mb-4 ${
-              isDark ? "text-white" : "text-zinc-900"
-            }`}
-          >
-            Featured Projects
-          </h3>
-          <div className="flex flex-col gap-6">
-            {projects.map((project) => (
-              <Card
-                key={project.id}
-                className={`group cursor-pointer transition-all duration-500 ease-out ${
-                  hoveredProject === project.id
-                    ? "-rotate-1"
-                    : "hover:shadow-lg"
-                } ${
-                  isDark
-                    ? "bg-black border-zinc-800"
-                    : "bg-white border-zinc-100"
-                } backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90`}
-                onMouseEnter={() => setHoveredProject(project.id)}
-                onMouseLeave={() => setHoveredProject(null)}
-              >
-                <div className="relative overflow-hidden rounded-t-lg">
-                  <div
-                    className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-20`}
-                  ></div>
-                  <Image
-                    src={project.image || "/placeholder.svg"}
-                    alt={project.title}
-                    width={500}
-                    height={300}
-                    className="object-cover w-full h-48 transition-transform duration-500 group-hover:scale-110"
-                  />
-                  <div
-                    className={`absolute inset-0 bg-black/0 group-hover:bg-black/60 transition-all duration-300 flex items-center justify-center space-x-3 ${
-                      hoveredProject === project.id
-                        ? "opacity-100"
-                        : "opacity-0"
-                    }`}
-                  >
-                    <Button
-                      size="sm"
+              <CardHeader className="pb-2">
+                <CardTitle
+                  className={`text-base ${
+                    theme == "dark" ? "text-white" : "text-zinc-900"
+                  }`}
+                >
+                  {project.title}
+                </CardTitle>
+                <CardDescription
+                  className={`text-sm ${
+                    theme == "dark" ? "text-zinc-400" : "text-zinc-600"
+                  }`}
+                >
+                  {project.description}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <div className="flex flex-wrap gap-1.5 mb-3">
+                  {project.tags.map((tag) => (
+                    <Badge
+                      key={tag}
                       variant="secondary"
-                      asChild
-                      className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-100 dark:bg-zinc-800 dark:text-white"
+                      className="text-xs px-2 py-0.5 bg-zinc-50 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"
                     >
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Github className="h-3.5 w-3.5 mr-1.5" />
-                        Code
-                      </a>
-                    </Button>
-                    <Button
-                      size="sm"
-                      className="bg-zinc-600 hover:bg-zinc-700 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-200 dark:bg-zinc-700 dark:hover:bg-zinc-600"
-                      asChild
-                    >
-                      <a
-                        href={project.live}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <ExternalLink className="h-3.5 w-3.5 mr-1.5" />
-                        Live
-                      </a>
-                    </Button>
-                  </div>
+                      {tag}
+                    </Badge>
+                  ))}
                 </div>
-                <CardHeader className="pb-2">
-                  <CardTitle
-                    className={`text-base ${
-                      isDark ? "text-white" : "text-zinc-900"
-                    }`}
-                  >
-                    {project.title}
-                  </CardTitle>
-                  <CardDescription
-                    className={`text-sm ${
-                      isDark ? "text-zinc-400" : "text-zinc-600"
-                    }`}
-                  >
-                    {project.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="pt-0">
-                  <div className="flex flex-wrap gap-1.5 mb-3">
-                    {project.tags.map((tag) => (
-                      <Badge
-                        key={tag}
-                        variant="secondary"
-                        className="text-xs px-2 py-0.5 bg-zinc-50 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"
-                      >
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                  <div className="flex items-center justify-between text-xs text-zinc-500 dark:text-zinc-400">
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center gap-1">
-                        <Star className="h-3 w-3" />
-                        {project.stars}
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <GitFork className="h-3 w-3" />
-                        {project.forks}
-                      </div>
+                <div className="flex items-center justify-between text-xs text-zinc-500 dark:text-zinc-400">
+                  <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-1">
+                      <Star className="h-3 w-3" />
+                      {project.stars}
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <GitFork className="h-3 w-3" />
+                      {project.forks}
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </section>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
 
-        {/* Game Section */}
-        <section className="mb-12">
+      {/* Game Section */}
+      <section className="mb-12">
+        <h3
+          className={`text-lg font-semibold mb-4 ${
+            theme == "dark" ? "text-white" : "text-zinc-900"
+          }`}
+        >
+          Take a Break - Play a Game!
+        </h3>
+        <SnakeGame />
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="mb-12">
+        <Card
+          className={`p-6 text-center ${
+            theme == "dark"
+              ? "bg-black border-zinc-800"
+              : "bg-white border-zinc-100"
+          } backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90`}
+        >
           <h3
-            className={`text-lg font-semibold mb-4 ${
-              isDark ? "text-white" : "text-zinc-900"
+            className={`text-lg font-semibold mb-3 ${
+              theme == "dark" ? "text-white" : "text-zinc-900"
             }`}
           >
-            Take a Break - Play a Game!
+            Let's Work Together
           </h3>
-          <SnakeGame />
-        </section>
-
-        {/* Contact Section */}
-        <section id="contact" className="mb-12">
-          <Card
-            className={`p-6 text-center ${
-              isDark ? "bg-black border-zinc-800" : "bg-white border-zinc-100"
-            } backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90`}
+          <p
+            className={`text-sm mb-4 ${
+              theme == "dark" ? "text-zinc-300" : "text-zinc-600"
+            }`}
           >
-            <h3
-              className={`text-lg font-semibold mb-3 ${
-                isDark ? "text-white" : "text-zinc-900"
-              }`}
-            >
-              Let's Work Together
-            </h3>
-            <p
-              className={`text-sm mb-4 ${
-                isDark ? "text-zinc-300" : "text-zinc-600"
-              }`}
-            >
-              I'm always interested in new opportunities and exciting projects.
-              Book a call with me to discuss your project. Look forward to
-              working with you!
-            </p>
-            <Link
-              href="https://cal.com/ashish15678/30min"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block w-full"
-            >
-              <div
-                className="
+            I'm always interested in new opportunities and exciting projects.
+            Book a call with me to discuss your project. Look forward to working
+            with you!
+          </p>
+          <Link
+            href="https://cal.com/ashish15678/30min"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block w-full"
+          >
+            <div
+              className="
     relative p-[2px] rounded-lg overflow-hidden
     shadow-lg shadow-zinc-500/25
     before:absolute before:inset-0 before:rounded-lg
@@ -966,9 +963,9 @@ export default function Portfolio() {
     transition-all duration-300
     hover:shadow-zinc-500/50
   "
-              >
-                <MagneticButton
-                  className="
+            >
+              <MagneticButton
+                className="
       relative bg-white
       dark:bg-zinc-900
       ring-0 px-4 py-2 rounded-md text-sm font-medium
@@ -977,14 +974,14 @@ export default function Portfolio() {
       transition-transform duration-300
       
     "
-                >
-                  <Video className="h-3.5 w-3.5 mr-1.5 flex-shrink-0" />
-                  <span className="truncate">Book a call</span>
-                </MagneticButton>
-              </div>
-            </Link>
+              >
+                <Video className="h-3.5 w-3.5 mr-1.5 flex-shrink-0" />
+                <span className="truncate">Book a call</span>
+              </MagneticButton>
+            </div>
+          </Link>
 
-            {/* <MagneticButton
+          {/* <MagneticButton
                 className="bg-gradient-to-r from-zinc-600 to-zinc-600 hover:from-zinc-700 hover:to-zinc-700 
                 text-white px-6 py-3 rounded-lg font-medium shadow-xl hover:shadow-zinc-500/25 
                 transition-all duration-300 w-full"
@@ -993,12 +990,11 @@ export default function Portfolio() {
                 Book a call
               </MagneticButton>
             </Link> */}
-          </Card>
-        </section>
+        </Card>
+      </section>
 
-        {/* Glowing Footer */}
-      </div>
+      {/* Glowing Footer */}
       <GlowingFooter />
-    </div>
+    </>
   );
 }
