@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./providers";
 import Wrapper from "./wrapper";
+import { Suspense } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,13 +28,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <ThemeProvider>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-          <Wrapper>{children}</Wrapper>
-        </body>
-      </ThemeProvider>
+      <Suspense
+        fallback={
+          <div className="animate-pulse font-bold h-screen w-screen flex items-center justify-center">
+            Loading...
+          </div>
+        }
+      >
+        <ThemeProvider>
+          <body
+            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          >
+            <Wrapper>{children}</Wrapper>
+          </body>
+        </ThemeProvider>
+      </Suspense>
     </html>
   );
 }

@@ -2,26 +2,26 @@
 
 import type React from "react";
 
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import {
-  Moon,
-  Sun,
-  ExternalLink,
-  Github,
-  Mail,
-  MapPin,
+  Briefcase,
   Calendar,
-  Star,
+  Code,
+  ExternalLink,
+  Gamepad2,
   GitFork,
+  Github,
   Globe,
   GraduationCap,
-  Gamepad2,
   Home,
-  User,
-  Code,
-  Briefcase,
+  Mail,
+  MapPin,
   MessageCircle,
+  Moon,
+  Star,
+  Sun,
+  User,
   Video,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -205,10 +205,12 @@ const MagneticButton = ({ children, className, link, ...props }: any) => {
       onMouseEnter={handleMouseEnter}
       {...props}
     >
-      {/** {isHovered && (
+      {
+        /** {isHovered && (
         <div className="absolute inset-0 bg-zinc-400 rounded-md blur-xl opacity-30 animate-pulse"></div>
       )}
-      */}
+      */
+      }
       {children}
     </button>
   );
@@ -250,7 +252,8 @@ const FloatingDock = () => {
                 {activeItem === item.id && (
                   <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-black dark:bg-white text-white dark:text-black text-xs px-2 py-1 rounded-md whitespace-nowrap">
                     {item.label}
-                    <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-black dark:border-t-white"></div>
+                    <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-black dark:border-t-white">
+                    </div>
                   </div>
                 )}
               </button>
@@ -425,27 +428,31 @@ const SnakeGame = () => {
           )}
         </div>
 
-        {!gameStarted ? (
-          <Button
-            onClick={startGame}
-            size="sm"
-            className="bg-zinc-600 hover:bg-zinc-700 dark:bg-zinc-700 dark:hover:bg-zinc-600"
-          >
-            Start Game
-          </Button>
-        ) : gameOver ? (
-          <Button
-            onClick={resetGame}
-            size="sm"
-            className="bg-zinc-600 hover:bg-zinc-700 dark:bg-zinc-700 dark:hover:bg-zinc-600"
-          >
-            Play Again
-          </Button>
-        ) : (
-          <p className="text-xs text-zinc-600 dark:text-zinc-400">
-            Use arrow keys to play
-          </p>
-        )}
+        {!gameStarted
+          ? (
+            <Button
+              onClick={startGame}
+              size="sm"
+              className="bg-zinc-600 hover:bg-zinc-700 dark:bg-zinc-700 dark:hover:bg-zinc-600"
+            >
+              Start Game
+            </Button>
+          )
+          : gameOver
+            ? (
+              <Button
+                onClick={resetGame}
+                size="sm"
+                className="bg-zinc-600 hover:bg-zinc-700 dark:bg-zinc-700 dark:hover:bg-zinc-600"
+              >
+                Play Again
+              </Button>
+            )
+            : (
+              <p className="text-xs text-zinc-600 dark:text-zinc-400">
+                Use arrow keys to play
+              </p>
+            )}
       </div>
     </Card>
   );
@@ -467,10 +474,12 @@ const BackgroundElements = ({ scrollProgress }: { scrollProgress: number }) => {
           transform: `perspective(1000px) rotateX(${Math.min(
             scrollProgress * 0.2,
             10,
-          )}deg)`,
+          )
+            }deg)`,
           transformOrigin: "center top",
         }}
-      ></div>
+      >
+      </div>
 
       {/* Larger grid for depth */}
       <div
@@ -485,10 +494,12 @@ const BackgroundElements = ({ scrollProgress }: { scrollProgress: number }) => {
           transform: `perspective(800px) rotateX(${Math.min(
             scrollProgress * 0.15,
             8,
-          )}deg)`,
+          )
+            }deg)`,
           transformOrigin: "center top",
         }}
-      ></div>
+      >
+      </div>
     </div>
   );
 };
@@ -500,14 +511,13 @@ const GlowingFooter = () => {
       <div className=" px-4 sm:px-6">
         <div className="relative">
           {/* Glow effect */}
-          <div className="absolute inset-0 blur-3xl bg-gradient-to-r from-emerald-400 via-emerald-500 to-emerald-600 opacity-30 dark:opacity-40 rounded-full transform"></div>
+          <div className="absolute inset-0 blur-3xl bg-gradient-to-r from-emerald-400 via-emerald-500 to-emerald-600 opacity-30 dark:opacity-40 rounded-full transform">
+          </div>
 
           {/* Text with gradient */}
-          <h2
-            className=" text-[6rem] font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-emerald-500 to-emerald-600
+          <h2 className=" text-[6rem] font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-emerald-500 to-emerald-600
           [text-shadow:0_0_10px_rgba(52,211,153,0.5)] flex items-center justify-center
-          "
-          >
+          ">
             ASHISH
           </h2>
         </div>
@@ -560,7 +570,7 @@ export default function Portfolio() {
           </div>
         </div>
         <div className="flex items-center space-x-1">
-          <Link href={"/blogs"} prefetch nonce="blog">
+          <Link href={"/blogs"} nonce="blog">
             <Button variant={"link"} className="font-bold underline">
               blogs
             </Button>
@@ -571,11 +581,9 @@ export default function Portfolio() {
             onClick={() => setTheme(theme == "dark" ? "light" : "dark")}
             className="rounded-full border-zinc-200 hover:bg-zinc-50 dark:border-zinc-800 dark:text-white  dark:hover:bg-zinc-900 dark:hover:text-white"
           >
-            {theme == "dark" ? (
-              <Sun className="h-4 w-4" />
-            ) : (
-              <Moon className="h-4 w-4" />
-            )}
+            {theme == "dark"
+              ? <Sun className="h-4 w-4" />
+              : <Moon className="h-4 w-4" />}
           </Button>
         </div>
       </header>
@@ -629,7 +637,8 @@ export default function Portfolio() {
                 <p
                   className={`text-sm ${theme == "dark" ? "text-zinc-300" : "text-zinc-600"
                     }`}
-                ></p>
+                >
+                </p>
                 <p
                   className={`text-sm ${theme == "dark" ? "text-zinc-300" : "text-zinc-600"
                     }`}
@@ -660,8 +669,7 @@ export default function Portfolio() {
                 </Link>
 
                 <Link href="mailto:ashish@ashish.services" className="flex-1">
-                  <div
-                    className="
+                  <div className="
     relative p-[2px] rounded-lg overflow-hidden
     shadow-lg shadow-zinc-500/25
     before:absolute before:inset-0 before:rounded-lg
@@ -669,10 +677,8 @@ export default function Portfolio() {
     before:animate-gradient-spin
     transition-all duration-300
     hover:shadow-zinc-500/50
-  "
-                  >
-                    <MagneticButton
-                      className="
+  ">
+                    <MagneticButton className="
       relative bg-white
       dark:bg-zinc-900
       ring-0 px-4 py-2 rounded-md text-sm font-medium
@@ -680,8 +686,7 @@ export default function Portfolio() {
       w-full h-full
       transition-transform duration-300
       
-    "
-                    >
+    ">
                       <Mail className="h-3.5 w-3.5 mr-1.5 flex-shrink-0" />
                       <span className="truncate">Mail me</span>
                     </MagneticButton>
@@ -795,7 +800,8 @@ export default function Portfolio() {
               <div className="relative overflow-hidden rounded-t-lg">
                 <div
                   className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-20`}
-                ></div>
+                >
+                </div>
                 <Image
                   src={project.image || "/placeholder.svg"}
                   alt={project.title}
@@ -921,8 +927,7 @@ export default function Portfolio() {
             rel="noopener noreferrer"
             className="block w-full"
           >
-            <div
-              className="
+            <div className="
     relative p-[2px] rounded-lg overflow-hidden
     shadow-lg shadow-zinc-500/25
     before:absolute before:inset-0 before:rounded-lg
@@ -930,10 +935,8 @@ export default function Portfolio() {
     before:animate-gradient-spin
     transition-all duration-300
     hover:shadow-zinc-500/50
-  "
-            >
-              <MagneticButton
-                className="
+  ">
+              <MagneticButton className="
       relative bg-white
       dark:bg-zinc-900
       ring-0 px-4 py-2 rounded-md text-sm font-medium
@@ -941,23 +944,24 @@ export default function Portfolio() {
       w-full h-full
       transition-transform duration-300
       
-    "
-              >
+    ">
                 <Video className="h-3.5 w-3.5 mr-1.5 flex-shrink-0" />
                 <span className="truncate">Book a call</span>
               </MagneticButton>
             </div>
           </Link>
 
-          {/* <MagneticButton
-                className="bg-gradient-to-r from-zinc-600 to-zinc-600 hover:from-zinc-700 hover:to-zinc-700 
-                text-white px-6 py-3 rounded-lg font-medium shadow-xl hover:shadow-zinc-500/25 
+          {
+            /* <MagneticButton
+                className="bg-gradient-to-r from-zinc-600 to-zinc-600 hover:from-zinc-700 hover:to-zinc-700
+                text-white px-6 py-3 rounded-lg font-medium shadow-xl hover:shadow-zinc-500/25
                 transition-all duration-300 w-full"
               >
                 <Mail className="h-4 w-4 mr-2" />
                 Book a call
               </MagneticButton>
-            </Link> */}
+            </Link> */
+          }
         </Card>
       </section>
 
