@@ -193,8 +193,9 @@ const MagneticButton = ({ children, className, link, ...props }: any) => {
   return (
     <button
       ref={buttonRef}
-      className={`relative inline-flex items-center justify-center transition-all duration-300 ease-out ${className} ${isHovered ? " shadow-md" : ""
-        }`}
+      className={`relative inline-flex items-center justify-center transition-all duration-300 ease-out ${className} ${
+        isHovered ? " shadow-md" : ""
+      }`}
       //style={{
       //transform: `translate(${position.x}px, ${position.y}px) ${
       // isHovered ? "scale(0.9)" : "scale(1)"
@@ -205,12 +206,10 @@ const MagneticButton = ({ children, className, link, ...props }: any) => {
       onMouseEnter={handleMouseEnter}
       {...props}
     >
-      {
-        /** {isHovered && (
+      {/** {isHovered && (
         <div className="absolute inset-0 bg-zinc-400 rounded-md blur-xl opacity-30 animate-pulse"></div>
       )}
-      */
-      }
+      */}
       {children}
     </button>
   );
@@ -238,22 +237,23 @@ const FloatingDock = () => {
                 onClick={() => scrollToSection(item.href)}
                 onMouseEnter={() => setActiveItem(item.id)}
                 onMouseLeave={() => setActiveItem(null)}
-                className={`relative p-3 rounded-xl transition-all duration-300 ease-out ${activeItem === item.id
+                className={`relative p-3 rounded-xl transition-all duration-300 ease-out ${
+                  activeItem === item.id
                     ? "bg-zinc-100 dark:bg-zinc-900 scale-125 -translate-y-2"
                     : "hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:scale-110"
-                  }`}
+                }`}
               >
                 <Icon
-                  className={`w-5 h-5 transition-colors duration-300 ${activeItem === item.id
+                  className={`w-5 h-5 transition-colors duration-300 ${
+                    activeItem === item.id
                       ? "text-zinc-600 dark:text-zinc-400"
                       : "text-zinc-600 dark:text-zinc-400"
-                    }`}
+                  }`}
                 />
                 {activeItem === item.id && (
                   <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-black dark:bg-white text-white dark:text-black text-xs px-2 py-1 rounded-md whitespace-nowrap">
                     {item.label}
-                    <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-black dark:border-t-white">
-                    </div>
+                    <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-black dark:border-t-white"></div>
                   </div>
                 )}
               </button>
@@ -301,7 +301,7 @@ const SnakeGame = () => {
         // Check self collision
         if (
           newSnake.some(
-            (segment) => segment.x === head.x && segment.y === head.y,
+            (segment) => segment.x === head.x && segment.y === head.y
           )
         ) {
           setGameOver(true);
@@ -393,10 +393,11 @@ const SnakeGame = () => {
           {snake.map((segment, index) => (
             <div
               key={index}
-              className={`absolute ${index === 0
+              className={`absolute ${
+                index === 0
                   ? "bg-zinc-600 dark:bg-zinc-500"
                   : "bg-zinc-400 dark:bg-zinc-600"
-                } rounded-sm`}
+              } rounded-sm`}
               style={{
                 left: segment.x * (canvasSize / gridSize),
                 top: segment.y * (canvasSize / gridSize),
@@ -428,31 +429,27 @@ const SnakeGame = () => {
           )}
         </div>
 
-        {!gameStarted
-          ? (
-            <Button
-              onClick={startGame}
-              size="sm"
-              className="bg-zinc-600 hover:bg-zinc-700 dark:bg-zinc-700 dark:hover:bg-zinc-600"
-            >
-              Start Game
-            </Button>
-          )
-          : gameOver
-            ? (
-              <Button
-                onClick={resetGame}
-                size="sm"
-                className="bg-zinc-600 hover:bg-zinc-700 dark:bg-zinc-700 dark:hover:bg-zinc-600"
-              >
-                Play Again
-              </Button>
-            )
-            : (
-              <p className="text-xs text-zinc-600 dark:text-zinc-400">
-                Use arrow keys to play
-              </p>
-            )}
+        {!gameStarted ? (
+          <Button
+            onClick={startGame}
+            size="sm"
+            className="bg-zinc-600 hover:bg-zinc-700 dark:bg-zinc-700 dark:hover:bg-zinc-600"
+          >
+            Start Game
+          </Button>
+        ) : gameOver ? (
+          <Button
+            onClick={resetGame}
+            size="sm"
+            className="bg-zinc-600 hover:bg-zinc-700 dark:bg-zinc-700 dark:hover:bg-zinc-600"
+          >
+            Play Again
+          </Button>
+        ) : (
+          <p className="text-xs text-zinc-600 dark:text-zinc-400">
+            Use arrow keys to play
+          </p>
+        )}
       </div>
     </Card>
   );
@@ -469,17 +466,16 @@ const BackgroundElements = ({ scrollProgress }: { scrollProgress: number }) => {
             linear-gradient(to right, rgba(34, 197, 94, 0.1) 1px, transparent 1px),
             linear-gradient(to bottom, rgba(34, 197, 94, 0.3) 1px, transparent 1px)
           `,
-          backgroundSize: `${40 + scrollProgress * 0.6}px ${40 + scrollProgress * 0.6
-            }px`,
+          backgroundSize: `${40 + scrollProgress * 0.6}px ${
+            40 + scrollProgress * 0.6
+          }px`,
           transform: `perspective(1000px) rotateX(${Math.min(
             scrollProgress * 0.2,
-            10,
-          )
-            }deg)`,
+            10
+          )}deg)`,
           transformOrigin: "center top",
         }}
-      >
-      </div>
+      ></div>
 
       {/* Larger grid for depth */}
       <div
@@ -489,17 +485,16 @@ const BackgroundElements = ({ scrollProgress }: { scrollProgress: number }) => {
             linear-gradient(to right, rgba(34, 197, 94, 0.2) 1px, transparent 1px),
             linear-gradient(to bottom, rgba(34, 197, 94, 0.2) 1px, transparent 1px)
           `,
-          backgroundSize: `${80 + scrollProgress * 1.2}px ${80 + scrollProgress * 1.2
-            }px`,
+          backgroundSize: `${80 + scrollProgress * 1.2}px ${
+            80 + scrollProgress * 1.2
+          }px`,
           transform: `perspective(800px) rotateX(${Math.min(
             scrollProgress * 0.15,
-            8,
-          )
-            }deg)`,
+            8
+          )}deg)`,
           transformOrigin: "center top",
         }}
-      >
-      </div>
+      ></div>
     </div>
   );
 };
@@ -511,13 +506,14 @@ const GlowingFooter = () => {
       <div className=" px-4 sm:px-6">
         <div className="relative">
           {/* Glow effect */}
-          <div className="absolute inset-0 blur-3xl bg-gradient-to-r from-emerald-400 via-emerald-500 to-emerald-600 opacity-30 dark:opacity-40 rounded-full transform">
-          </div>
+          <div className="absolute inset-0 blur-3xl bg-gradient-to-r from-emerald-400 via-emerald-500 to-emerald-600 opacity-30 dark:opacity-40 rounded-full transform"></div>
 
           {/* Text with gradient */}
-          <h2 className=" text-[6rem] font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-emerald-500 to-emerald-600
+          <h2
+            className=" text-[6rem] font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-emerald-500 to-emerald-600
           [text-shadow:0_0_10px_rgba(52,211,153,0.5)] flex items-center justify-center
-          ">
+          "
+          >
             ASHISH
           </h2>
         </div>
@@ -562,8 +558,9 @@ export default function Portfolio() {
               Ashish
             </h1>
             <p
-              className={`text-sm ${theme == "dark" ? "text-zinc-300" : "text-zinc-600"
-                }`}
+              className={`text-sm ${
+                theme == "dark" ? "text-zinc-300" : "text-zinc-600"
+              }`}
             >
               Full Stack Developer
             </p>
@@ -581,9 +578,11 @@ export default function Portfolio() {
             onClick={() => setTheme(theme == "dark" ? "light" : "dark")}
             className="rounded-full border-zinc-200 hover:bg-zinc-50 dark:border-zinc-800 dark:text-white  dark:hover:bg-zinc-900 dark:hover:text-white"
           >
-            {theme == "dark"
-              ? <Sun className="h-4 w-4" />
-              : <Moon className="h-4 w-4" />}
+            {theme == "dark" ? (
+              <Sun className="h-4 w-4" />
+            ) : (
+              <Moon className="h-4 w-4" />
+            )}
           </Button>
         </div>
       </header>
@@ -591,22 +590,25 @@ export default function Portfolio() {
       {/* Hero Section */}
       <section className="mb-12" id="about">
         <Card
-          className={`p-6 ${theme == "dark"
+          className={`p-6 ${
+            theme == "dark"
               ? "bg-black border-zinc-800"
               : "bg-white border-none"
-            } shadow-none transition-shadow duration-300 backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90`}
+          } shadow-none transition-shadow duration-300 backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90`}
         >
           <div className="items-center">
             <div className="w-full">
               <h2
-                className={`text-2xl font-semibold mb-3 ${theme == "dark" ? "text-white" : "text-zinc-900"
-                  }`}
+                className={`text-2xl font-semibold mb-3 ${
+                  theme == "dark" ? "text-white" : "text-zinc-900"
+                }`}
               >
                 Building Digital Experiences
               </h2>
               <p
-                className={`text-sm mb-4 ${theme == "dark" ? "text-zinc-300" : "text-zinc-600"
-                  } leading-relaxed`}
+                className={`text-sm mb-4 ${
+                  theme == "dark" ? "text-zinc-300" : "text-zinc-600"
+                } leading-relaxed`}
               >
                 I'm a passionate full-stack developer specializing in creating
                 beautiful and functional web applications. With 2+ years of
@@ -617,8 +619,9 @@ export default function Portfolio() {
                 <div className="flex items-center gap-1.5">
                   <MapPin className="h-3.5 w-3.5 text-zinc-500 dark:text-zinc-400" />
                   <span
-                    className={`text-sm ${theme == "dark" ? "text-zinc-300" : "text-zinc-600"
-                      }`}
+                    className={`text-sm ${
+                      theme == "dark" ? "text-zinc-300" : "text-zinc-600"
+                    }`}
                   >
                     Greater Noida, India
                   </span>
@@ -626,8 +629,9 @@ export default function Portfolio() {
                 <div className="flex items-center gap-1.5">
                   <Calendar className="h-3.5 w-3.5 text-green-500 text-shadow-green-500" />
                   <span
-                    className={`text-sm font-extrabold ${theme == "dark" ? "text-green-500" : "text-green-500"
-                      }`}
+                    className={`text-sm font-extrabold ${
+                      theme == "dark" ? "text-green-500" : "text-green-500"
+                    }`}
                   >
                     Available for work
                   </span>
@@ -635,13 +639,14 @@ export default function Portfolio() {
               </div>
               <div className="space-y-2 mb-4">
                 <p
-                  className={`text-sm ${theme == "dark" ? "text-zinc-300" : "text-zinc-600"
-                    }`}
-                >
-                </p>
+                  className={`text-sm ${
+                    theme == "dark" ? "text-zinc-300" : "text-zinc-600"
+                  }`}
+                ></p>
                 <p
-                  className={`text-sm ${theme == "dark" ? "text-zinc-300" : "text-zinc-600"
-                    }`}
+                  className={`text-sm ${
+                    theme == "dark" ? "text-zinc-300" : "text-zinc-600"
+                  }`}
                 >
                   I write blogs on{" "}
                   <Link href="https://tronlab.in" title="TronLab">
@@ -669,7 +674,8 @@ export default function Portfolio() {
                 </Link>
 
                 <Link href="mailto:ashish@ashish.services" className="flex-1">
-                  <div className="
+                  <div
+                    className="
     relative p-[2px] rounded-lg overflow-hidden
     shadow-lg shadow-zinc-500/25
     before:absolute before:inset-0 before:rounded-lg
@@ -677,8 +683,10 @@ export default function Portfolio() {
     before:animate-gradient-spin
     transition-all duration-300
     hover:shadow-zinc-500/50
-  ">
-                    <MagneticButton className="
+  "
+                  >
+                    <MagneticButton
+                      className="
       relative bg-white
       dark:bg-zinc-900
       ring-0 px-4 py-2 rounded-md text-sm font-medium
@@ -686,7 +694,8 @@ export default function Portfolio() {
       w-full h-full
       transition-transform duration-300
       
-    ">
+    "
+                    >
                       <Mail className="h-3.5 w-3.5 mr-1.5 flex-shrink-0" />
                       <span className="truncate">Mail me</span>
                     </MagneticButton>
@@ -701,8 +710,9 @@ export default function Portfolio() {
       {/* Education Section */}
       <section className="mb-12">
         <h3
-          className={`text-lg font-semibold mb-4 ${theme == "dark" ? "text-white" : "text-zinc-900"
-            }`}
+          className={`text-lg font-semibold mb-4 ${
+            theme == "dark" ? "text-white" : "text-zinc-900"
+          }`}
         >
           Education
         </h3>
@@ -710,10 +720,11 @@ export default function Portfolio() {
           {education.map((edu, index) => (
             <div
               key={index}
-              className={`p-4 rounded-xl border ${theme == "dark"
+              className={`p-4 rounded-xl border ${
+                theme == "dark"
                   ? "bg-black border-zinc-800"
                   : " border-zinc-200"
-                } hover:shadow-sm transition-shadow backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90`}
+              } hover:shadow-sm transition-shadow backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90`}
             >
               <div className="flex items-start gap-3">
                 <div className="p-2 bg-zinc-100 dark:bg-zinc-900 rounded-lg">
@@ -721,19 +732,22 @@ export default function Portfolio() {
                 </div>
                 <div className="flex-1">
                   <h4
-                    className={`font-semibold text-sm ${theme == "dark" ? "text-white" : "text-zinc-900"
-                      }`}
+                    className={`font-semibold text-sm ${
+                      theme == "dark" ? "text-white" : "text-zinc-900"
+                    }`}
                   >
                     {edu.degree}
                   </h4>
                   <p
-                    className={`text-sm ${theme == "dark" ? "text-zinc-300" : "text-zinc-600"
-                      }`}
+                    className={`text-sm ${
+                      theme == "dark" ? "text-zinc-300" : "text-zinc-600"
+                    }`}
                   >
                     {edu.school}
                     <span
-                      className={`text-xs ml-4 ${theme == "dark" ? "text-zinc-400" : "text-zinc-500"
-                        }`}
+                      className={`text-xs ml-4 ${
+                        theme == "dark" ? "text-zinc-400" : "text-zinc-500"
+                      }`}
                     >
                       ({edu.year})
                     </span>
@@ -755,8 +769,9 @@ export default function Portfolio() {
       {/* Tech Stack */}
       <section className="mb-12" id="skills">
         <h3
-          className={`text-lg font-semibold mb-4 ${theme == "dark" ? "text-white" : "text-zinc-900"
-            }`}
+          className={`text-lg font-semibold mb-4 ${
+            theme == "dark" ? "text-white" : "text-zinc-900"
+          }`}
         >
           Technologies I Work With
         </h3>
@@ -765,10 +780,11 @@ export default function Portfolio() {
             <Badge
               key={tech.name}
               variant="outline"
-              className={`px-3 py-1 text-xs font-medium border transition-all duration-200 hover:scale-105 hover:shadow-sm ${theme == "dark"
+              className={`px-3 py-1 text-xs font-medium border transition-all duration-200 hover:scale-105 hover:shadow-sm ${
+                theme == "dark"
                   ? "bg-black text-zinc-200 border-zinc-800 hover:bg-zinc-900"
                   : tech.color
-                }`}
+              }`}
               style={{ animationDelay: `${index * 30}ms` }}
             >
               {tech.name}
@@ -780,8 +796,9 @@ export default function Portfolio() {
       {/* Featured Projects */}
       <section className="mb-12" id="projects">
         <h3
-          className={`text-lg font-semibold mb-4 ${theme == "dark" ? "text-white" : "text-zinc-900"
-            }`}
+          className={`text-lg font-semibold mb-4 ${
+            theme == "dark" ? "text-white" : "text-zinc-900"
+          }`}
         >
           Featured Projects
         </h3>
@@ -789,19 +806,20 @@ export default function Portfolio() {
           {projects.map((project) => (
             <Card
               key={project.id}
-              className={`group cursor-pointer transition-all duration-500 ease-out ${hoveredProject === project.id ? "-rotate-1" : "hover:shadow-lg"
-                } ${theme == "dark"
+              className={`group cursor-pointer transition-all duration-500 ease-out ${
+                hoveredProject === project.id ? "-rotate-1" : "hover:shadow-lg"
+              } ${
+                theme == "dark"
                   ? "bg-black border-zinc-800"
                   : "bg-white border-zinc-100"
-                } backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90`}
+              } backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90`}
               onMouseEnter={() => setHoveredProject(project.id)}
               onMouseLeave={() => setHoveredProject(null)}
             >
               <div className="relative overflow-hidden rounded-t-lg">
                 <div
                   className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-20`}
-                >
-                </div>
+                ></div>
                 <Image
                   src={project.image || "/placeholder.svg"}
                   alt={project.title}
@@ -810,8 +828,9 @@ export default function Portfolio() {
                   className="object-cover w-full h-48 transition-transform duration-500 group-hover:scale-110"
                 />
                 <div
-                  className={`absolute inset-0 bg-black/0 group-hover:bg-black/60 transition-all duration-300 flex items-center justify-center space-x-3 ${hoveredProject === project.id ? "opacity-100" : "opacity-0"
-                    }`}
+                  className={`absolute inset-0 bg-black/0 group-hover:bg-black/60 transition-all duration-300 flex items-center justify-center space-x-3 ${
+                    hoveredProject === project.id ? "opacity-100" : "opacity-0"
+                  }`}
                 >
                   <Button
                     size="sm"
@@ -846,14 +865,16 @@ export default function Portfolio() {
               </div>
               <CardHeader className="pb-2">
                 <CardTitle
-                  className={`text-base ${theme == "dark" ? "text-white" : "text-zinc-900"
-                    }`}
+                  className={`text-base ${
+                    theme == "dark" ? "text-white" : "text-zinc-900"
+                  }`}
                 >
                   {project.title}
                 </CardTitle>
                 <CardDescription
-                  className={`text-sm ${theme == "dark" ? "text-zinc-400" : "text-zinc-600"
-                    }`}
+                  className={`text-sm ${
+                    theme == "dark" ? "text-zinc-400" : "text-zinc-600"
+                  }`}
                 >
                   {project.description}
                 </CardDescription>
@@ -891,8 +912,9 @@ export default function Portfolio() {
       {/* Game Section */}
       <section className="mb-12">
         <h3
-          className={`text-lg font-semibold mb-4 ${theme == "dark" ? "text-white" : "text-zinc-900"
-            }`}
+          className={`text-lg font-semibold mb-4 ${
+            theme == "dark" ? "text-white" : "text-zinc-900"
+          }`}
         >
           Take a Break - Play a Game!
         </h3>
@@ -902,20 +924,23 @@ export default function Portfolio() {
       {/* Contact Section */}
       <section id="contact" className="mb-12">
         <Card
-          className={`p-6 text-center ${theme == "dark"
+          className={`p-6 text-center ${
+            theme == "dark"
               ? "bg-black border-zinc-800"
               : "bg-white border-zinc-100"
-            } backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90`}
+          } backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90`}
         >
           <h3
-            className={`text-lg font-semibold mb-3 ${theme == "dark" ? "text-white" : "text-zinc-900"
-              }`}
+            className={`text-lg font-semibold mb-3 ${
+              theme == "dark" ? "text-white" : "text-zinc-900"
+            }`}
           >
             Let's Work Together
           </h3>
           <p
-            className={`text-sm mb-4 ${theme == "dark" ? "text-zinc-300" : "text-zinc-600"
-              }`}
+            className={`text-sm mb-4 ${
+              theme == "dark" ? "text-zinc-300" : "text-zinc-600"
+            }`}
           >
             I'm always interested in new opportunities and exciting projects.
             Book a call with me to discuss your project. Look forward to working
@@ -927,7 +952,8 @@ export default function Portfolio() {
             rel="noopener noreferrer"
             className="block w-full"
           >
-            <div className="
+            <div
+              className="
     relative p-[2px] rounded-lg overflow-hidden
     shadow-lg shadow-zinc-500/25
     before:absolute before:inset-0 before:rounded-lg
@@ -935,8 +961,10 @@ export default function Portfolio() {
     before:animate-gradient-spin
     transition-all duration-300
     hover:shadow-zinc-500/50
-  ">
-              <MagneticButton className="
+  "
+            >
+              <MagneticButton
+                className="
       relative bg-white
       dark:bg-zinc-900
       ring-0 px-4 py-2 rounded-md text-sm font-medium
@@ -944,15 +972,15 @@ export default function Portfolio() {
       w-full h-full
       transition-transform duration-300
       
-    ">
+    "
+              >
                 <Video className="h-3.5 w-3.5 mr-1.5 flex-shrink-0" />
                 <span className="truncate">Book a call</span>
               </MagneticButton>
             </div>
           </Link>
 
-          {
-            /* <MagneticButton
+          {/* <MagneticButton
                 className="bg-gradient-to-r from-zinc-600 to-zinc-600 hover:from-zinc-700 hover:to-zinc-700
                 text-white px-6 py-3 rounded-lg font-medium shadow-xl hover:shadow-zinc-500/25
                 transition-all duration-300 w-full"
@@ -960,8 +988,7 @@ export default function Portfolio() {
                 <Mail className="h-4 w-4 mr-2" />
                 Book a call
               </MagneticButton>
-            </Link> */
-          }
+            </Link> */}
         </Card>
       </section>
 

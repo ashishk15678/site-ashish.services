@@ -28,6 +28,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <meta property="og:title" content="Ashish Kumar's Portfolio" />
+      <meta property="og:type" content="website" />
+      <meta
+        property="og:description"
+        content="Hi , I am ashish and am looking to work , so hit me up or check out atleast."
+      />
+      <meta
+        property="og:image"
+        content="https://avatars.githubusercontent.com/u/147980956?s=96&v=4"
+      />
       <Suspense
         fallback={
           <div className="animate-pulse font-bold h-screen w-screen flex items-center justify-center">
