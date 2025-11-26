@@ -36,7 +36,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useTheme } from "./providers";
+import { useTheme } from "../providers";
 
 const techStack = [
   {
@@ -334,7 +334,7 @@ const SnakeGame = () => {
         // Check self collision
         if (
           newSnake.some(
-            (segment) => segment.x === head.x && segment.y === head.y
+            (segment) => segment.x === head.x && segment.y === head.y,
           )
         ) {
           setGameOver(true);
@@ -443,8 +443,8 @@ const SnakeGame = () => {
             gameOver
               ? "Game over."
               : gameStarted
-              ? "Game in progress."
-              : "Game ready to start."
+                ? "Game in progress."
+                : "Game ready to start."
           }`}
         >
           {/* Snake */}
@@ -537,7 +537,7 @@ const BackgroundElements = ({ scrollProgress }: { scrollProgress: number }) => {
           }px`,
           transform: `perspective(1000px) rotateX(${Math.min(
             scrollProgress * 0.2,
-            10
+            10,
           )}deg)`,
           transformOrigin: "center top",
         }}
@@ -556,7 +556,7 @@ const BackgroundElements = ({ scrollProgress }: { scrollProgress: number }) => {
           }px`,
           transform: `perspective(800px) rotateX(${Math.min(
             scrollProgress * 0.15,
-            8
+            8,
           )}deg)`,
           transformOrigin: "center top",
         }}
@@ -910,7 +910,7 @@ export default function Portfolio() {
        flex items-center justify-center
        w-full h-full
        transition-transform duration-300
-       
+
      "
                         aria-label="Send email to Ashish Kumar"
                       >
@@ -1255,7 +1255,7 @@ export default function Portfolio() {
        flex items-center justify-center
        w-full h-full
        transition-transform duration-300
-       
+
      "
                   aria-label="Book a 30-minute call with Ashish Kumar"
                 >
